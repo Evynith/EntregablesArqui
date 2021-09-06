@@ -5,14 +5,19 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class FabricaDockerDAO extends FabricaDAOs {
+public class FabricaMysqlDAO extends FabricaDAOs {
 
-	
 	public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
 	public static final String URI = "jdbc:mysql://localhost:3306/entregable1db";
 	public static Connection conn = null;
 	
-	public FabricaDockerDAO() {
+	public FabricaMysqlDAO() {
+		try {
+			this.createTables();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private static Connection crearConecion() {
@@ -28,7 +33,7 @@ public class FabricaDockerDAO extends FabricaDAOs {
 		}
 		//creamos conexion (registramos el driver y pedimos la conexion)
 		try {
-			conn = DriverManager.getConnection(URI, "root", "password");
+			conn = DriverManager.getConnection(URI, "root", "");
 			conn.setAutoCommit(false);
 			return conn;
 		} catch (SQLException e) {
@@ -51,22 +56,24 @@ public class FabricaDockerDAO extends FabricaDAOs {
 		conn.close();
 		conn = null;
 	}
-
+	
+	private void createTables() throws SQLException {
+		new TablasMySql();
+	}
+	
 	@Override
 	public ClienteDAO getClienteDAO() {
-		return new DockerClienteDAO();
+		return new MySQLClienteDAO();
 	}
 
 	@Override
 	public FacturaDAO getFacturaDAO() {
-		return new DockerFacturaDAO();
+		return new  MySQLFacturaDAO();
 	}
 
 	@Override
 	public ProductoDAO getProductoDAO() {
-		return new DockerProductoDAO();
+		return new MySQLProductoDAO();
 	}
-	
 
-		
 }

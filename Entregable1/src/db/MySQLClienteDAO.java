@@ -7,11 +7,10 @@ import java.util.ArrayList;
 
 import entidades.Cliente;
 
-public class DockerClienteDAO implements ClienteDAO {
-
-	public DockerClienteDAO() {
-		super();
-		// TODO Auto-generated constructor stub
+public class MySQLClienteDAO implements ClienteDAO {
+	
+	public MySQLClienteDAO() {
+		
 	}
 
 	@Override
@@ -44,5 +43,6 @@ public class DockerClienteDAO implements ClienteDAO {
 		ps.close();
 		FabricaDockerDAO.coneccion().commit();
 	}
+
 
 }

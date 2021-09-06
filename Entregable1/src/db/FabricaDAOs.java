@@ -4,6 +4,7 @@ public abstract class FabricaDAOs {
 
 	public static final int DERBY_JDBC = 1;
 	public static final int DOCKER_JDBC = 2;
+	public static final int MYSQL_JDBC = 3;
 	
 	public FabricaDAOs() {
 		
@@ -23,6 +24,7 @@ public abstract class FabricaDAOs {
 		switch (tipo) {
 		case DERBY_JDBC : return new FabricaDerbyDAO();
 		case DOCKER_JDBC : return new FabricaDockerDAO(); 
+		case MYSQL_JDBC : return new FabricaMysqlDAO(); 
 		default : return null;
 		}
 	}

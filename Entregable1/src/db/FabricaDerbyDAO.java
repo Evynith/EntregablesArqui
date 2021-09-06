@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class FabricaDerbyDAO extends FabricaDAOs {
 
 	public static final String DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
-	public static final String URI = "jdbc:derby:MyDerbyDb;create=true";
+	public static final String URI = "jdbc:derby:entregable1db;create=true";
 	public static Connection conn = null;
 	
 	public FabricaDerbyDAO() {	
@@ -52,16 +52,26 @@ public class FabricaDerbyDAO extends FabricaDAOs {
 		conn = null;
 	}
 	
+	/*
+	 * LO MISMO QUE LOS OTROS PORQUE TAMBIÉN USAN JDBC!!!!!!!!!!!!!!
+	 */
+	
 	public ClienteDAO getClienteDAO() {
-		return new DerbyClienteDAO();
+//		return new DerbyClienteDAO();
+		//TODO
+		return null;
 	}
 	
 	public FacturaDAO getFacturaDAO() {
-		return new DerbyFacturaDAO();
+//		return new DerbyFacturaDAO();
+		//TODO
+		return null;
 	}
 	
 	public ProductoDAO getProductoDAO() {
-		return new DerbyProductoDAO();
+//		return new DerbyProductoDAO();
+		//TODO
+		return null;
 	}
 		
 		
