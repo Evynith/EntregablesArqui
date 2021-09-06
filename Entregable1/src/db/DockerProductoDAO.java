@@ -26,7 +26,7 @@ public class DockerProductoDAO implements ProductoDAO {
 	}
 
 	@Override
-	public Producto getMayorRecaudacion() throws SQLException {
+	public ProductoMayorRecaudado getMayorRecaudacion() throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}

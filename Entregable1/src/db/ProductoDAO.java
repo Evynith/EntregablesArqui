@@ -14,5 +14,5 @@ public interface ProductoDAO {
 			//inserta en la db un producto con los datos dados
 			public void insert(Producto p) throws SQLException;
 			
-			public Producto getMayorRecaudacion() throws SQLException;
+			public ProductoMayorRecaudado getMayorRecaudacion() throws SQLException;
 }

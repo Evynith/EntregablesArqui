@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import entidades.Cliente;
+import entidades.ClientePorFacturacionDesc;
 
 public class MySQLClienteDAO implements ClienteDAO {
 	
@@ -14,14 +15,14 @@ public class MySQLClienteDAO implements ClienteDAO {
 	}
 
 	@Override
-	public ArrayList<Cliente> list() throws SQLException {
+	public ArrayList<ClientePorFacturacionDesc> list() throws SQLException {
 		//traigo datos (prepare statement)
 				String select = "SELECT * FROM persona"; //si tubiera un where debo usar el "truco" de los placeolders con los "?"
 				//TODO traer los clientes ordenados
 				PreparedStatement ps = FabricaDockerDAO.coneccion().prepareStatement(select);
 				ResultSet rs = ps.executeQuery();
 //				ps.close();
-				ArrayList<Cliente> lista = new ArrayList<Cliente>();
+				ArrayList<ClientePorFacturacionDesc> lista = new ArrayList<Cliente>();
 				while (rs.next()) {
 					lista.add(new Cliente(rs.getInt(1), rs.getString(2), rs.getString(3), null));
 				}
