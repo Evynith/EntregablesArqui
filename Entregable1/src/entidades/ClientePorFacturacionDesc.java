@@ -4,13 +4,18 @@ public class ClientePorFacturacionDesc {
 
 	private int id;
 	private String nombre;
-	private String email;
+	private float recaudacion;
 	
-	public ClientePorFacturacionDesc(int id, String nombre, String email) {
+	
+	public ClientePorFacturacionDesc(int id, String nombre, float recaudacion) {
 		this.id = id;
 		this.nombre = nombre;
-		this.email = email;
+		this.recaudacion = recaudacion;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "ClientePorFacturacionDesc [id=" + id + ", nombre=" + nombre + ", recaudación=" + this.recaudacion + "]";
+	}
 	
 }

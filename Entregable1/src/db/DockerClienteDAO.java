@@ -30,7 +30,7 @@ public class DockerClienteDAO implements ClienteDAO {
 		//debo devolver un tipo legible porque debo cerrar la conexion, sino se pierde
 		ArrayList<ClientePorFacturacionDesc> lista = new ArrayList<ClientePorFacturacionDesc>();
 		while (rs.next()) {
-			lista.add(new ClientePorFacturacionDesc(rs.getInt(1), rs.getString(2), rs.getString(3)));
+			lista.add(new ClientePorFacturacionDesc(rs.getInt(1), rs.getString(2), rs.getFloat(3)));
 		}
 		FabricaDockerDAO.closeConeccion();
 		return lista;
