@@ -2,15 +2,22 @@ package db;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import entidades.Cliente;
 import entidades.Factura;
 
 public interface FacturaDAO {
 
-	//devuelve un listado de facturas de la db de determinado cliente
-		public ArrayList<Factura> list(Cliente c) throws SQLException;
+	/**
+	 * Devuelve un listado de las facturas por cliente.
+	 * @return Devuelve una lista de facturas.
+	 * @throws SQLException
+	 */
+	ArrayList<Factura> list(Cliente c) throws SQLException;
 		
-		//inserta en la db una factura con los datos dados
-		public void insert(Factura f) throws SQLException;
+	/**
+	 * Inserta una factura.
+	 * @param f Que es la factura.
+	 * @throws SQLException
+	 */
+	int insert(Factura f) throws SQLException;
 }

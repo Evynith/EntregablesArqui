@@ -3,7 +3,6 @@ package db;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class FabricaDerbyDAO extends FabricaDAOs {
@@ -12,9 +11,12 @@ public class FabricaDerbyDAO extends FabricaDAOs {
 	public static final String URI = "jdbc:derby:entregable1db;create=true";
 	public static Connection conn = null;
 	
-	public FabricaDerbyDAO() {	
-	}
+	public FabricaDerbyDAO() {}
 	
+	/**
+	 * Crea la conexión a la base de datos.
+	 * @return Devuelve la conexón.
+	 */
 	private static Connection crearConecion() {
 		Connection conn;
 		//se crea la instancia de driver
@@ -33,13 +35,15 @@ public class FabricaDerbyDAO extends FabricaDAOs {
 			return conn;
 		} catch (SQLException e) {
 			// Auto-generated catch block
-//			conn = null;
 			e.printStackTrace();
 			return null;
 		}
-//		return conn;
 	}
 	
+	/**
+	 * Devuelve la conexión y si no la hay la crea.
+	 * @return Devuelve la conexión.
+	 */
 	public static Connection coneccion() {
 		if(conn == null) {
 			conn = crearConecion();
@@ -47,32 +51,42 @@ public class FabricaDerbyDAO extends FabricaDAOs {
 		return conn;
 	}
 	
+	/**
+	 * Cierra la conexión.
+	 * @throws SQLException
+	 */
 	public static void closeConeccion() throws SQLException {
 		conn.close();
 		conn = null;
 	}
 	
-	/*
-	 * LO MISMO QUE LOS OTROS PORQUE TAMBIÉN USAN JDBC!!!!!!!!!!!!!!
+	/**
+	 * Devuelve el DAO correspondiente para la tecnología usada.
+	 * @return Devuelve un ClienteDAO.
 	 */
-	
+	@Override
 	public ClienteDAO getClienteDAO() {
-//		return new DerbyClienteDAO();
-		//TODO
+		//return new DerbyClienteDAO();
 		return null;
 	}
-	
+
+	/**
+	 * Devuelve el DAO correspondiente para la tecnología usada.
+	 * @return Devuelve una FacturaDAO
+	 */
+	@Override
 	public FacturaDAO getFacturaDAO() {
-//		return new DerbyFacturaDAO();
-		//TODO
+		//return new DerbyFacturaDAO();
 		return null;
 	}
-	
+
+	/**
+	 * Devuelve el DAO correspondiente para la tecnología usada.
+	 * @return Devuelve un ProductoDAO.
+	 */
+	@Override
 	public ProductoDAO getProductoDAO() {
-//		return new DerbyProductoDAO();
-		//TODO
+		//return new DerbyProductoDAO();
 		return null;
 	}
-		
-		
 }

@@ -1,21 +1,16 @@
 package entidades;
 
-import java.util.ArrayList;
-
 public class Cliente {
 	
 	private int id;
 	private String nombre;
 	private String email;
-	private ArrayList<Factura> facturas;
 	
-	public Cliente(int id, String nombre, String email, ArrayList<Factura> facturas) {
+	public Cliente(int id, String nombre, String email) {
 		this.id = id;
 		this.nombre = nombre;
 		this.email = email;
-		this.facturas = new ArrayList<Factura>();
-		this.facturas.addAll(facturas);
-	}
+	}	
 
 	public String getNombre() {
 		return nombre;
@@ -37,17 +32,9 @@ public class Cliente {
 		return id;
 	}
 
-	public ArrayList<Factura> getFacturas() {
-		return facturas;
-	}
-
-	public void addFactura(Factura f) {
-		this.facturas.add(f);
-	}
-
 	@Override
 	public String toString() {
-		return "Cliente [id=" + id + ", nombre=" + nombre + ", email=" + email + ", facturas=" + facturas + "]";
+		return "Cliente [id=" + id + ", nombre=" + nombre + ", email=" + email + "]";
 	}
 
 	

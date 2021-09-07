@@ -6,9 +6,7 @@ public abstract class FabricaDAOs {
 	public static final int DOCKER_JDBC = 2;
 	public static final int MYSQL_JDBC = 3;
 	
-	public FabricaDAOs() {
-		
-	}
+	public FabricaDAOs() {}
 	
 	public abstract ClienteDAO getClienteDAO();
 	
@@ -28,5 +26,4 @@ public abstract class FabricaDAOs {
 		default : return null;
 		}
 	}
-	
 }

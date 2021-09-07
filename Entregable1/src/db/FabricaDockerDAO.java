@@ -7,14 +7,16 @@ import java.sql.SQLException;
 
 public class FabricaDockerDAO extends FabricaDAOs {
 
-	
 	public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
 	public static final String URI = "jdbc:mysql://localhost:3306/entregable1db";
 	public static Connection conn = null;
 	
-	public FabricaDockerDAO() {
-	}
+	public FabricaDockerDAO() {}
 	
+	/**
+	 * Crea la conexión a la base de datos.
+	 * @return Devuelve la conexón.
+	 */
 	private static Connection crearConecion() {
 		Connection conn;
 		//se crea la instancia de driver
@@ -33,13 +35,15 @@ public class FabricaDockerDAO extends FabricaDAOs {
 			return conn;
 		} catch (SQLException e) {
 			// Auto-generated catch block
-//			conn = null;
 			e.printStackTrace();
 			return null;
 		}
-//		return conn;
 	}
 	
+	/**
+	 * Devuelve la conexión y si no la hay la crea.
+	 * @return Devuelve la conexión.
+	 */
 	public static Connection coneccion() {
 		if(conn == null) {
 			conn = crearConecion();
@@ -47,26 +51,39 @@ public class FabricaDockerDAO extends FabricaDAOs {
 		return conn;
 	}
 	
+	/**
+	 * Cierra la conexión.
+	 * @throws SQLException
+	 */
 	public static void closeConeccion() throws SQLException {
 		conn.close();
 		conn = null;
 	}
 
+	/**
+	 * Devuelve el DAO correspondiente para la tecnología usada.
+	 * @return Devuelve un ClienteDAO.
+	 */
 	@Override
 	public ClienteDAO getClienteDAO() {
 		return new DockerClienteDAO();
 	}
 
+	/**
+	 * Devuelve el DAO correspondiente para la tecnología usada.
+	 * @return Devuelve una FacturaDAO
+	 */
 	@Override
 	public FacturaDAO getFacturaDAO() {
 		return new DockerFacturaDAO();
 	}
 
+	/**
+	 * Devuelve el DAO correspondiente para la tecnología usada.
+	 * @return Devuelve un ProductoDAO.
+	 */
 	@Override
 	public ProductoDAO getProductoDAO() {
 		return new DockerProductoDAO();
 	}
-	
-
-		
 }

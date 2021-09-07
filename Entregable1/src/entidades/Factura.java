@@ -1,33 +1,26 @@
 package entidades;
 
-import java.util.ArrayList;
-
 public class Factura {
 
 	private int id;
-	private ArrayList<Producto> productos;
+	private int idCliente;
 	
-	public Factura(int id, ArrayList<Producto> productos) {
+	public Factura(int id, int idCliente) {
 		this.id = id;
-		this.productos = new ArrayList<Producto>();
-		this.productos.addAll(productos);
+		this.idCliente = idCliente;
 	}
 
 	public int getId() {
 		return id;
 	}
 
-	public ArrayList<Producto> getProductos() {
-		return productos;
-	}
-	
-	public void addProducto(Producto p) {
-		this.productos.add(p);
+	public int getIdCliente() {
+		return this.idCliente;
 	}
 
 	@Override
 	public String toString() {
-		return "Factura [id=" + id + ", productos=" + productos + "]";
+		return "Factura [id=" + id +"]";
 	}
 	
 	

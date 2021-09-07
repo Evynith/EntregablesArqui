@@ -6,12 +6,18 @@ public class Producto {
 	private String nombre;
 	private float valor;
 	private int cantidad;
+	private int idFactura;
 	
-	public Producto(int id, String nombre, float valor, int cantidad) {
+	public Producto(int id, String nombre, float valor, int cantidad, int idFactura) {
 		this.id = id;
 		this.nombre = nombre;
 		this.valor = valor;
 		this.cantidad = cantidad;
+		this.idFactura = idFactura;
+	}
+	
+	public int getIdFactura() {
+		return this.idFactura;
 	}
 
 	public String getNombre() {
