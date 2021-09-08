@@ -20,5 +20,5 @@ public interface FacturaDAO {
 	 * @throws SQLException
 	 */
 	int insert(Factura f) throws SQLException;
-	int insertarProducto(Factura f,int a) throws SQLException ;
+	int insertarProducto(Factura f) throws SQLException;
 }

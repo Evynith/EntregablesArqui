@@ -38,14 +38,14 @@ public class MySQLFacturaDAO implements FacturaDAO {
 		FabricaMysqlDAO.coneccion().commit();
 		return f.getId();
 	}
+	
 	@Override
-	public int insertarProducto(Factura f,int a) throws SQLException {
-		String insertFacturaProducto = "INSERT INTO Invoice_Product (IdInvoiceProduct,idInvoice, idProduct, Quantity) VALUES (?,?, ?, ?)";
+	public int insertarProducto(Factura f) throws SQLException {
+		String insertFacturaProducto = "INSERT INTO Invoice_Product(idInvoice, idProduct, Quantity) VALUES (?, ?, ?)";
 		PreparedStatement ps = FabricaMysqlDAO.coneccion().prepareStatement(insertFacturaProducto);
-		ps.setInt(1, a);
-		ps.setInt(2, f.getId());
-		ps.setInt(3, f.getIdProducto());
-		ps.setInt(4, f.getCantidad());
+		ps.setInt(1, f.getId());
+		ps.setInt(2, f.getIdProducto());
+		ps.setInt(3, f.getCantidad());
 		ps.executeUpdate();
 		ps.close();
 		FabricaMysqlDAO.coneccion();

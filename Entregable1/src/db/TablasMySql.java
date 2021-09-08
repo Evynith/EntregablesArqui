@@ -91,11 +91,10 @@ public class TablasMySql {
 	 */
 	private void createInvoiceProductTable() throws SQLException {
 		String query = "CREATE TABLE " + this.InvoiceProduct + "(" +
-		"IdInvoiceProduct INT NOT NULL," +
 		"idInvoice INT NOT NULL," +
 		"idProduct INT NOT NULL," +
 		"Quantity INT NOT NULL," +
-		"PRIMARY KEY(idInvoiceProduct)," +
+		"PRIMARY KEY(idInvoice, idProduct)," +
 		"FOREIGN KEY(idInvoice) REFERENCES Invoice(idInvoice)," +
 		"FOREIGN KEY(idProduct) REFERENCES Product(idProduct))";
 		

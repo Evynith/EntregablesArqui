@@ -33,4 +33,10 @@ public class DockerFacturaDAO implements FacturaDAO {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public int insertarProducto(Factura f) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
