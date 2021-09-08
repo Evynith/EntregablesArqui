@@ -1,62 +1,65 @@
 package app;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-
 import db.FabricaDAOs;
 import db.FacturaDAO;
 import db.ProductoDAO;
 import entidades.Cliente;
-import entidades.ClientePorFacturacionDesc;
 import entidades.Factura;
 import entidades.Producto;
-import entidades.ProductoMayorRecaudado;
 import db.ClienteDAO;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 public class Main {
 
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) throws SQLException , FileNotFoundException, IOException {
 		// creo mi fabrica de fabricas de DAO
 		FabricaDAOs MySqlFactory = FabricaDAOs.nuevo(FabricaDAOs.MYSQL_JDBC);
+		
 		ClienteDAO clientDAO = MySqlFactory.getClienteDAO();
-		
-		Cliente c1 = new Cliente(1, "Fede", "fede@gmail.com");
-		Cliente c2 = new Cliente(2, "Fede2", "fede@gmail.com2");
-		Cliente c3 = new Cliente(3, "Fede3", "fede@gmail.com3");
-		
-		int idClient = clientDAO.insert(c1);
-		int idClient2 = clientDAO.insert(c2);
-		int idClient3 = clientDAO.insert(c3);
-		
 		FacturaDAO invoiceDAO = MySqlFactory.getFacturaDAO();
-		
-		Factura f1 = new Factura(1, idClient);
-		Factura f2 = new Factura(2, idClient2);
-		Factura f3 = new Factura(3, idClient3);
-		
-		int idInvoice = invoiceDAO.insert(f1);
-		int idInvoice2 = invoiceDAO.insert(f2);
-		int idInvoice3 = invoiceDAO.insert(f3);
-		
 		ProductoDAO productDAO = MySqlFactory.getProductoDAO();
+		CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader("/home/tubino/eclipse-workspace/EntregasArqui2021/Entregable1arquitecturas/data/clientes.csv"));	
+		for(CSVRecord row: parser) {
+			Cliente c1 = new Cliente(Integer.parseInt(row.get("idCliente")) , row.get("nombre"), row.get("email"));
+			int idClient = clientDAO.insert(c1);
+		}
 		
-		Producto p1 = new Producto(1, "Alfajor", 50, 10, idInvoice);
-		Producto p2 = new Producto(2, "Coca cola", 200, 1, idInvoice);
-		Producto p3 = new Producto(3, "Bizcochotos", 75, 60, idInvoice2);
-		Producto p4 = new Producto(4, "Agua mineral", 1, 100, idInvoice3);
 		
-		productDAO.insert(p1);
-		productDAO.insert(p2);
-		productDAO.insert(p3);
-		productDAO.insert(p4);
 		
-		ProductoMayorRecaudado pmr = productDAO.getMayorRecaudacion();
-		System.out.println(pmr);
+		CSVParser parser2 = CSVFormat.DEFAULT.withHeader().parse(new FileReader("/home/tubino/eclipse-workspace/EntregasArqui2021/Entregable1arquitecturas/data/facturas.csv"));
+		for(CSVRecord row: parser2) {
+			Factura f1 = new Factura( Integer.parseInt(row.get("idFactura")), Integer.parseInt(row.get("idCliente")) );
+			int idInvoice = invoiceDAO.insert(f1);
+			}	
 		
-		ArrayList<ClientePorFacturacionDesc> listado = new ArrayList<ClientePorFacturacionDesc>();
+		CSVParser parser3 = CSVFormat.DEFAULT.withHeader().parse(new FileReader("/home/tubino/eclipse-workspace/EntregasArqui2021/Entregable1arquitecturas/data/productos.csv"));
+		for(CSVRecord row: parser3) {
+			Producto p1 = new Producto( Integer.parseInt(row.get("idProducto")), row.get("nombre"),Integer.parseInt(row.get("valor")) );
+
+			productDAO.insert(p1);	}	
 		
-		listado = clientDAO.list();
+		int aux = 1;
 		
-		System.out.println(listado);
+		CSVParser parser4 = CSVFormat.DEFAULT.withHeader().parse(new FileReader("/home/tubino/eclipse-workspace/EntregasArqui2021/Entregable1arquitecturas/data/facturas-productos.csv"));;
+		for(CSVRecord row: parser4) {
+//			System.out.println("   id fact   "+Integer.parseInt(row.get("idFactura"))+"   id prod  "+Integer.parseInt(row.get("idProducto"))+"  cantidad  "+Integer.parseInt(row.get("cantidad")));
+			Factura f1 = new Factura( aux,Integer.parseInt(row.get("idFactura")), Integer.parseInt(row.get("idProducto")) , Integer.parseInt(row.get("cantidad")) );
+			int idInvoice = invoiceDAO.insertarProducto(f1,aux);
+			aux++;
+		}	
+//		Factura f1 = new Factura(1, idClient);
+//		
+//		int idInvoice = invoiceDAO.insert(f1);
+//		
+//		
+//		Producto p1 = new Producto(1, "Alfajor", 50, 1, idInvoice);
+//		
+//		productDAO.insert(p1);
 	}
 }

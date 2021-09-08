@@ -15,7 +15,12 @@ public class Producto {
 		this.cantidad = cantidad;
 		this.idFactura = idFactura;
 	}
-	
+	public Producto(int id, String nombre, float valor) {
+		this.id = id;
+		this.nombre = nombre;
+		this.valor = valor;
+		
+	}
 	public int getIdFactura() {
 		return this.idFactura;
 	}
