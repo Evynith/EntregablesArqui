@@ -53,13 +53,17 @@ public class Main {
 		CSVParser parser4 = CSVFormat.DEFAULT.withHeader().parse(new FileReader("./data/facturas-productos.csv"));
 		for(CSVRecord row: parser4) {
 			for(Factura f : facturas ) {
-				f.addProducto(Integer.parseInt(row.get("idFactura")), Integer.parseInt(row.get("idProducto")) , Integer.parseInt(row.get("cantidad")) );
+//				if (productDAO.exists(Integer.parseInt(row.get("idProducto")))) {
+					f.addProducto(Integer.parseInt(row.get("idFactura")), Integer.parseInt(row.get("idProducto")) , Integer.parseInt(row.get("cantidad")) );
+//				}
 			}
 		}
 		for(Factura f : facturas ) {
 			invoiceDAO.insertar(f);
 		}
 		//----------
+		
+		System.out.println("el producto 455 existe? " + productDAO.exists(455));
 			
 		ArrayList<ClientePorFacturacionDesc> list = new ArrayList<ClientePorFacturacionDesc>();
 		list = clientDAO.list();

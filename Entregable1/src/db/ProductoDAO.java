@@ -29,4 +29,6 @@ public interface ProductoDAO {
 	 * @throws SQLException
 	 */
 	ProductoMayorRecaudado getMayorRecaudacion() throws SQLException;
+	
+	boolean exists(int idProducto) throws SQLException;
 }

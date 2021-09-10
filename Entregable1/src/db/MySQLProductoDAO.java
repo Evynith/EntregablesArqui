@@ -53,4 +53,19 @@ public class MySQLProductoDAO implements ProductoDAO {
 		return pmr;
 	}
 
+	@Override
+	public boolean exists(int idProducto) throws SQLException {
+		String select = "SELECT COUNT(*) AS cantidad FROM Product WHERE idProduct = " + idProducto + ";"; 
+		PreparedStatement ps = FabricaMysqlDAO.coneccion().prepareStatement(select);
+		ResultSet rs = ps.executeQuery();
+		boolean rta = false; 
+		while (rs.next()) {
+			if (rs.getInt(1) > 0 ) {
+				rta = true;
+			}
+		}
+		FabricaMysqlDAO.closeConeccion();
+		return rta;
+	}
+
 }
