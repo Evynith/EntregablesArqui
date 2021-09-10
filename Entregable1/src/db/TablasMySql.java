@@ -90,15 +90,17 @@ public class TablasMySql {
 	 * @throws SQLException
 	 */
 	private void createInvoiceProductTable() throws SQLException {
-		String query = "CREATE TABLE " + this.InvoiceProduct + "(" +
-		"idInvoice INT NOT NULL," +
-		"idProduct INT NOT NULL," +
-		"Quantity INT NOT NULL," +
-		"PRIMARY KEY(idInvoice, idProduct)," +
-		"FOREIGN KEY(idInvoice) REFERENCES Invoice(idInvoice)," +
-		"FOREIGN KEY(idProduct) REFERENCES Product(idProduct))";
 		
-		this.ejecutar(query);
+		String queryTable = "CREATE TABLE " + this.InvoiceProduct + "(" +
+				"idInvoice INT NOT NULL," +
+				"idProduct INT NOT NULL," +
+				"Quantity INT NOT NULL," +
+				"PRIMARY KEY(idInvoice, idProduct)" //)" ; 
+				+ "," +
+				" CONSTRAINT fk1_"+ this.InvoiceProduct +" FOREIGN KEY (idInvoice) REFERENCES Invoice(idInvoice)," +
+				" CONSTRAINT fk2_"+ this.InvoiceProduct +" FOREIGN KEY (idProduct) REFERENCES Product(idProduct))"; 
+
+		this.ejecutar(queryTable);
 	}
 	
 	/**
