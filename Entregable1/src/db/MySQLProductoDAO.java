@@ -31,6 +31,7 @@ public class MySQLProductoDAO implements ProductoDAO {
 		ps.executeUpdate();
 		ps.close();
 		FabricaMysqlDAO.coneccion().commit();
+		FabricaMysqlDAO.closeConeccion();
 	}
 
 	@Override

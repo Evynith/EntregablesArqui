@@ -54,6 +54,7 @@ public class MySQLClienteDAO implements ClienteDAO {
 		ps.executeUpdate();
 		ps.close();
 		FabricaMysqlDAO.coneccion().commit();
+		FabricaMysqlDAO.closeConeccion();
 		return p.getId();
 	}
 }
