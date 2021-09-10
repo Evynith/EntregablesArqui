@@ -39,7 +39,7 @@ public class Main {
 		//Productos
 		CSVParser parser3 = CSVFormat.DEFAULT.withHeader().parse(new FileReader("./data/productos.csv"));
 		for(CSVRecord row: parser3) {
-			Producto p1 = new Producto( Integer.parseInt(row.get("idProducto")), row.get("nombre"),Integer.parseInt(row.get("valor")));
+			Producto p1 = new Producto( Integer.parseInt(row.get("idProducto")), row.get("nombre"),Float.parseFloat(row.get("valor")));
 			productDAO.insert(p1);
 		}	
 		//Facturas
