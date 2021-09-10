@@ -25,17 +25,7 @@ public class DockerFacturaDAO implements FacturaDAO {
 	 * @param f Que es la factura.
 	 */
 	@Override
-	public int insert(Factura f) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	public int insertarProducto(Factura f,int a) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int insertarProducto(Factura f) throws SQLException {
+	public int insertar(Factura f) throws SQLException {
 		// TODO Auto-generated method stub
 		return 0;
 	}

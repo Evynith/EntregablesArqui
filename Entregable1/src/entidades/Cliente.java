@@ -1,16 +1,26 @@
 package entidades;
 
+//import java.util.ArrayList;
+
 public class Cliente {
 	
 	private int id;
 	private String nombre;
 	private String email;
+//	private ArrayList<Factura> facturas;
 	
 	public Cliente(int id, String nombre, String email) {
 		this.id = id;
 		this.nombre = nombre;
 		this.email = email;
+//		this.facturas = new ArrayList<Factura>();
 	}	
+	
+//	public void addFactura(Factura f, int idCliente) {
+//		if(idCliente == this.id) {
+//			this.facturas.add(f);	
+//		}
+//	}
 
 	public String getNombre() {
 		return nombre;

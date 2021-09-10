@@ -31,22 +31,6 @@ public class MySQLProductoDAO implements ProductoDAO {
 		ps.executeUpdate();
 		ps.close();
 		FabricaMysqlDAO.coneccion().commit();
-		
-		if (p.getIdFactura() > 0)
-			invoiceProductInsert(p);
-	}
-	
-	private void invoiceProductInsert(Producto p) throws SQLException {
-		String insert = "INSERT INTO Invoice_Product(IdInvoiceProduct, idInvoice, idProduct, Quantity) VALUES (?,?,?,?)";
-		//preparo la sentencia en la conexion
-		PreparedStatement ps = FabricaMysqlDAO.coneccion().prepareStatement(insert);
-		ps.setInt(1, p.getId()); // ver
-		ps.setInt( 2, p.getIdFactura());
-		ps.setInt(3, p.getId());
-		ps.setInt(4, p.getCantidad());
-		ps.executeUpdate();
-		ps.close();
-		FabricaMysqlDAO.coneccion().commit();
 	}
 
 	@Override

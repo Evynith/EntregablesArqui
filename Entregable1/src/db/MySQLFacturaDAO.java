@@ -3,6 +3,8 @@ package db;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Hashtable;
+
 import entidades.Cliente;
 import entidades.Factura;
 
@@ -26,8 +28,8 @@ public class MySQLFacturaDAO implements FacturaDAO {
 	 * @param f Que es la factura.
 	 * @throws SQLException
 	 */
-	@Override
-	public int insert(Factura f) throws SQLException {
+	
+	private void insertarFactura(Factura f) throws SQLException {
 		String insert = "INSERT INTO Invoice(idInvoice, idClient) VALUES (?,?)";
 		//preparo la sentencia en la conexion
 		PreparedStatement ps = FabricaMysqlDAO.coneccion().prepareStatement(insert);
@@ -36,19 +38,35 @@ public class MySQLFacturaDAO implements FacturaDAO {
 		ps.executeUpdate();
 		ps.close();
 		FabricaMysqlDAO.coneccion().commit();
-		return f.getId();
 	}
 	
-	@Override
-	public int insertarProducto(Factura f) throws SQLException {
+	private void insertarProductoEnFactura(int idProducto, int cantidad, int idFactura) throws SQLException {
 		String insertFacturaProducto = "INSERT INTO Invoice_Product(idInvoice, idProduct, Quantity) VALUES (?, ?, ?)";
 		PreparedStatement ps = FabricaMysqlDAO.coneccion().prepareStatement(insertFacturaProducto);
-		ps.setInt(1, f.getId());
-		ps.setInt(2, f.getIdProducto());
-		ps.setInt(3, f.getCantidad());
+		ps.setInt(1, idFactura);
+		ps.setInt(2, idProducto);
+		ps.setInt(3, cantidad);
 		ps.executeUpdate();
 		ps.close();
 		FabricaMysqlDAO.coneccion();
+	}
+	
+	private void insertarProductosEnFactura(Factura f) throws SQLException {
+		Hashtable<Integer, Integer> productos = f.getProductos();
+		productos.forEach((k,v) -> {
+			try {
+				this.insertarProductoEnFactura( k,v,f.getId() );
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+	}
+	
+	@Override
+	public int insertar(Factura f) throws SQLException {
+		this.insertarFactura(f);
+		this.insertarProductosEnFactura(f);
 		return f.getId();
 	}
 

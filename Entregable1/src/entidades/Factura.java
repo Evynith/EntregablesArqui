@@ -1,36 +1,35 @@
 package entidades;
 
+import java.util.Hashtable;
+
 public class Factura {
 
 	private int id;
 	private int idCliente;
-	private int cantidad;
-	private int idProducto;
+	private Hashtable<Integer, Integer> productos;
 
 	public Factura(int id, int idCliente) {
 		this.id = id;
 		this.idCliente = idCliente;
+		this.productos = new Hashtable<Integer, Integer>();
 	}
 	
-	public Factura(int id, int idProducto, int cantidad) {
-		this.id = id;
-		this.idProducto = idProducto;
-		this.cantidad = cantidad;
+	public void addProducto(int producto, int cantidad, int idFactura) {
+		if (idFactura == this.id) {
+			this.productos.put(producto, cantidad);	
+		}
+	}
+	
+	public Hashtable<Integer, Integer> getProductos() {
+		return new Hashtable<Integer, Integer>(this.productos);
 	}
 	
 	public int getId() {
 		return id;
 	}
-
+	
 	public int getIdCliente() {
-		return this.idCliente;
-	}
-
-	public int getCantidad() {
-		return this.cantidad;
-	}
-	public int getIdProducto() {
-		return this.idProducto;
+		return idCliente;
 	}
 
 	@Override
