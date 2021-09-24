@@ -50,6 +50,7 @@ public class MySQLFacturaDAO implements FacturaDAO {
 		ps.setInt(3, cantidad);
 		ps.executeUpdate();
 		ps.close();
+		FabricaMysqlDAO.coneccion().commit();
 		FabricaMysqlDAO.closeConeccion();
 	}
 	
@@ -60,7 +61,8 @@ public class MySQLFacturaDAO implements FacturaDAO {
 				this.insertarProductoEnFactura( k,v,f.getId() );
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+//				e.printStackTrace();
+				System.out.printf("\nNo se pudo agregar producto %d porque %s", k , e.getMessage());
 			}
 		});
 	}

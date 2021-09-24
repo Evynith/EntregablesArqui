@@ -63,11 +63,11 @@ public class Main {
 		}
 		//----------
 		
-		System.out.println("el producto 455 existe? " + productDAO.exists(455));
+//		System.out.println("el producto 455 existe? " + productDAO.exists(455));
 			
 		ArrayList<ClientePorFacturacionDesc> list = new ArrayList<ClientePorFacturacionDesc>();
 		list = clientDAO.list();
-		System.out.println(list);
+		System.out.println("\n" + list);
 		
 		System.out.println(productDAO.getMayorRecaudacion());
 
