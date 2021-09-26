@@ -11,8 +11,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "carrera")
 public class Carrera {
 
 	@Id
@@ -20,12 +23,12 @@ public class Carrera {
 	private int id;
 	@Column(nullable = false)
 	private String nombre;
-	@ManyToMany(fetch = FetchType.LAZY) 
-	private List<Estudiante> estudiantes;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "carrera") 
+	private List<Carrera_Estudiante> estudiantes;
 	
 	public Carrera(String nombre) {
 		this.nombre = nombre;
-		this.estudiantes = new ArrayList<Estudiante>();
+		this.estudiantes = new ArrayList<Carrera_Estudiante>();
 	}
 
 	public int getId() {
@@ -34,10 +37,6 @@ public class Carrera {
 
 	public String getNombre() {
 		return nombre;
-	}
-
-	public List<Estudiante> getEstudiantes() {
-		return estudiantes;
 	}
 	
 	@Override

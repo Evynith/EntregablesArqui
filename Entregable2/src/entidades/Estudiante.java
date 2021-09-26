@@ -10,8 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "estudiante")
 public class Estudiante {
 
 	@Id
@@ -29,8 +32,8 @@ public class Estudiante {
 	private int edad;
 	@Column(nullable = false)
 	private String ciudad;
-	@ManyToMany(mappedBy = "estudiantes", fetch = FetchType.LAZY)
-	private List<Carrera> carreras;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "estudiante")
+	private List<Carrera_Estudiante> carreras;
 	
 	public Estudiante(int libreta, String nombre, String apellido, 
 		String genero, int edad, String ciudad) {
@@ -40,11 +43,7 @@ public class Estudiante {
 		this.genero = genero;
 		this.edad = edad;
 		this.ciudad = ciudad;
-		this.carreras = new ArrayList<Carrera>();
-	}
-	
-	public void agregarCarrera(Carrera c) {
-		this.carreras.add(c);
+		this.carreras = new ArrayList<Carrera_Estudiante>();
 	}
 
 	public int getDni() {
