@@ -38,17 +38,20 @@ public class MySQLFacturaDAO implements FacturaDAO {
 		ps.executeUpdate();
 		ps.close();
 		FabricaMysqlDAO.coneccion().commit();
+		FabricaMysqlDAO.closeConeccion();
 	}
-	
+	//TODO revisar violacion en FK desde los CSV, vienen inconsistentes
 	private void insertarProductoEnFactura(int idProducto, int cantidad, int idFactura) throws SQLException {
 		String insertFacturaProducto = "INSERT INTO Invoice_Product(idInvoice, idProduct, Quantity) VALUES (?, ?, ?)";
+//		System.out.println("... " + idFactura+ "-" + idProducto + "-" + cantidad + "...");
 		PreparedStatement ps = FabricaMysqlDAO.coneccion().prepareStatement(insertFacturaProducto);
 		ps.setInt(1, idFactura);
 		ps.setInt(2, idProducto);
 		ps.setInt(3, cantidad);
 		ps.executeUpdate();
 		ps.close();
-		FabricaMysqlDAO.coneccion();
+		FabricaMysqlDAO.coneccion().commit();
+		FabricaMysqlDAO.closeConeccion();
 	}
 	
 	private void insertarProductosEnFactura(Factura f) throws SQLException {
@@ -58,7 +61,8 @@ public class MySQLFacturaDAO implements FacturaDAO {
 				this.insertarProductoEnFactura( k,v,f.getId() );
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+//				e.printStackTrace();
+				System.out.printf("\nNo se pudo agregar producto %d porque %s", k , e.getMessage());
 			}
 		});
 	}

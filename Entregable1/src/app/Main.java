@@ -39,7 +39,7 @@ public class Main {
 		//Productos
 		CSVParser parser3 = CSVFormat.DEFAULT.withHeader().parse(new FileReader("./data/productos.csv"));
 		for(CSVRecord row: parser3) {
-			Producto p1 = new Producto( Integer.parseInt(row.get("idProducto")), row.get("nombre"),Integer.parseInt(row.get("valor")));
+			Producto p1 = new Producto( Integer.parseInt(row.get("idProducto")), row.get("nombre"),Float.parseFloat(row.get("valor")));
 			productDAO.insert(p1);
 		}	
 		//Facturas
@@ -53,17 +53,21 @@ public class Main {
 		CSVParser parser4 = CSVFormat.DEFAULT.withHeader().parse(new FileReader("./data/facturas-productos.csv"));
 		for(CSVRecord row: parser4) {
 			for(Factura f : facturas ) {
-				f.addProducto(Integer.parseInt(row.get("idFactura")), Integer.parseInt(row.get("idProducto")) , Integer.parseInt(row.get("cantidad")) );
+//				if (productDAO.exists(Integer.parseInt(row.get("idProducto")))) {
+					f.addProducto(Integer.parseInt(row.get("idFactura")), Integer.parseInt(row.get("idProducto")) , Integer.parseInt(row.get("cantidad")) );
+//				}
 			}
 		}
 		for(Factura f : facturas ) {
 			invoiceDAO.insertar(f);
 		}
 		//----------
+		
+//		System.out.println("el producto 455 existe? " + productDAO.exists(455));
 			
 		ArrayList<ClientePorFacturacionDesc> list = new ArrayList<ClientePorFacturacionDesc>();
 		list = clientDAO.list();
-		System.out.println(list);
+		System.out.println("\n" + list);
 		
 		System.out.println(productDAO.getMayorRecaudacion());
 

@@ -51,4 +51,10 @@ public class DockerProductoDAO implements ProductoDAO {
 		FabricaMysqlDAO.closeConeccion();
 		return pmr;
 	}
+
+	@Override
+	public boolean exists(int idProducto) throws SQLException {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
