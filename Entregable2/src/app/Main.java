@@ -4,7 +4,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-
 import entidades.Carrera;
 import entidades.Carrera_Estudiante;
 import entidades.Estudiante;
@@ -35,10 +34,10 @@ public class Main {
 		em.getTransaction().commit();
 		
 		// c) recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple.
-		Query q = em.createQuery("SELECT e FROM Estudiante e ORDER BY e.edad");
+		Query q = em.createNamedQuery(federico.OBTENER_TODOS_ORDENADOS);
 		System.out.println(q.getResultList());
 		
-		// d) recuperar un estudiante, en base a su número de libreta universitaria.
+		//d) recuperar un estudiante, en base a su número de libreta universitaria.
 		q = em.createQuery("SELECT e FROM Estudiante e WHERE e.libreta = ?1").setParameter(1, 23423423);
 		System.out.println(q.getResultList());
 		
