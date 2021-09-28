@@ -12,8 +12,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("Example");
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = ManejadorMySQL.conectar();
 		
 		Carrera tudai = new Carrera("TUDAI");
 		Estudiante federico = new Estudiante(942342, "Federico", "de Muguruza", "Masculino", 50, "Tandil");
@@ -23,7 +22,6 @@ public class Main {
 		Carrera_Estudiante ce2 = new Carrera_Estudiante(bruno, tudai);
 		Carrera_Estudiante ce3 = new Carrera_Estudiante(evy, tudai);
 		
-		em.getTransaction().begin();	
 		em.persist(tudai);
 		em.persist(federico);
 		em.persist(bruno);
@@ -31,7 +29,6 @@ public class Main {
 		em.persist(ce);
 		em.persist(ce2);
 		em.persist(ce3);
-		em.getTransaction().commit();
 		
 		// c) recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple.
 		Query q = em.createNamedQuery(federico.OBTENER_TODOS_ORDENADOS);
@@ -41,8 +38,7 @@ public class Main {
 		q = em.createQuery("SELECT e FROM Estudiante e WHERE e.libreta = ?1").setParameter(1, 23423423);
 		System.out.println(q.getResultList());
 		
-		em.close();
-		emf.close();
+		 ManejadorMySQL.desconectar();
 
 	}
 
