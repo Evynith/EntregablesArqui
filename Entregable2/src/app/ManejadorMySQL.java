@@ -21,9 +21,9 @@ public class ManejadorMySQL {
 	
 	public static void desconectar() {
 		em.getTransaction().commit();
-		 em.close();
-		 emf.close();
-		 em = null;
-		 emf = null;
+		em.close();
+		emf.close();
+		em = null;
+		emf = null;
 	}
 }

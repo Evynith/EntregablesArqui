@@ -5,8 +5,10 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import entidades.Carrera;
+import entidades.CarreraRepository;
 import entidades.Carrera_Estudiante;
 import entidades.Estudiante;
+import entidades.EstudianteRepository;
 
 public class Main {
 
@@ -15,28 +17,36 @@ public class Main {
 		EntityManager em = ManejadorMySQL.conectar();
 		
 		Carrera tudai = new Carrera("TUDAI");
-		Estudiante federico = new Estudiante(942342, "Federico", "de Muguruza", "Masculino", 50, "Tandil");
-		Estudiante bruno = new Estudiante(4324234, "Bruno", "Tubino", "Masculino", 40, "Tandil");
-		Estudiante evy = new Estudiante(23423423, "Evelin", "Vega", "Femenino", 30, "Tandil");
+		Carrera tupar = new Carrera("TUPAR");
+		Estudiante federico = new Estudiante(3424, 942342, "Federico", "de Muguruza", "Masculino", 50, "Azul");
+		Estudiante bruno = new Estudiante(324324, 4324234, "Bruno", "Tubino", "Masculino", 40, "Tandil");
+		Estudiante evy = new Estudiante(324234, 23423423, "Evelin", "Vega", "Femenino", 30, "Tandil");
+		Estudiante fulana = new Estudiante(34324, 423432432, "Fulana", "Vega", "Femenino", 20, "Necochea");
 		Carrera_Estudiante ce = new Carrera_Estudiante(federico, tudai);
 		Carrera_Estudiante ce2 = new Carrera_Estudiante(bruno, tudai);
 		Carrera_Estudiante ce3 = new Carrera_Estudiante(evy, tudai);
 		
-		em.persist(tudai);
-		em.persist(federico);
-		em.persist(bruno);
-		em.persist(evy);
-		em.persist(ce);
-		em.persist(ce2);
-		em.persist(ce3);
+		EstudianteRepository er = new EstudianteRepository(em);
+		CarreraRepository cr = new CarreraRepository(em);
 		
-		// c) recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple.
-		Query q = em.createNamedQuery(federico.OBTENER_TODOS_ORDENADOS);
-		System.out.println(q.getResultList());
+		er.agregarEstudiante(federico);
+		er.agregarEstudiante(bruno);
+		er.agregarEstudiante(evy);
+		er.agregarEstudiante(fulana);
 		
-		//d) recuperar un estudiante, en base a su número de libreta universitaria.
-		q = em.createQuery("SELECT e FROM Estudiante e WHERE e.libreta = ?1").setParameter(1, 23423423);
-		System.out.println(q.getResultList());
+		cr.agregarCarrera(tudai);
+		cr.agregarCarrera(tupar);
+		
+		cr.matricularEstudiante(evy, tudai);
+		cr.matricularEstudiante(federico, tudai);
+		cr.matricularEstudiante(bruno, tudai);
+		cr.matricularEstudiante(fulana, tupar);
+		
+		System.out.println(er.getEstudiantesOrdenadosEdad());
+		System.out.println(er.getEstudiantePorLibreta(23423423));
+		System.out.println(er.getEstudiantesPorGenero("Masculino"));
+		System.out.println(cr.getCarreraConEstudiantesOrdenadosCant());
+		System.out.println(cr.getEstudiantesPorCarreraFiltradoCiudad(tudai, "Tandil"));
 		
 		 ManejadorMySQL.desconectar();
 

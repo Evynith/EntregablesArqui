@@ -23,6 +23,8 @@ public class Carrera {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "carrera") 
 	private List<Carrera_Estudiante> estudiantes;
 	
+	public Carrera() {}
+	
 	public Carrera(String nombre) {
 		this.nombre = nombre;
 		this.estudiantes = new ArrayList<Carrera_Estudiante>();
