@@ -1,25 +1,27 @@
-package entidades;
+package repository;
 
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-public class CarreraRepository {
-	
-	private EntityManager em;
-	
-	public CarreraRepository(EntityManager em) {
-		this.em = em;
+import entidades.Carrera;
+import entidades.Carrera_Estudiante;
+import entidades.Estudiante;
+
+public class CarreraRepository extends GenericRepositoryJPA<Carrera> {
+
+	public CarreraRepository() {
+		super();
 	}
 	
-	public void agregarCarrera(Carrera c) {
-		em.persist(c);
-	}
+//	ya está defnido en GenericRepositoryJPA
+//	public void agregarCarrera(Carrera c) {
+//		em.persist(c);
+//	}
 	
 	//b) matricular un estudiante en una carrera
-	public void matricularEstudiante(Estudiante e, Carrera c) {
-		Carrera_Estudiante ce = new Carrera_Estudiante(e, c);
+	public void matricularEstudiante(Carrera_Estudiante ce) {
 		em.persist(ce);
 	}
 	
@@ -31,8 +33,8 @@ public class CarreraRepository {
 	
 	// TODO PREGUNTAR A QUÉ SE REFIERE CON FILTRADO POR CIUDAD
 	//g) recuperar los estudiantes de una determinada carrera, filtrado por ciudad de residencia.
-	public List<Carrera> getEstudiantesPorCarreraFiltradoCiudad(Carrera carrera, String ciudad) {
-		Query q = this.em.createQuery("SELECT ce.estudiante FROM Carrera_Estudiante ce WHERE ce.carrera LIKE ?1 AND ce.estudiante.ciudad LIKE ?2")
+	public List<Carrera> getEstudiantesPorCarreraFiltradoCiudad(String carrera, String ciudad) {
+		Query q = this.em.createQuery("SELECT ce.estudiante FROM Carrera_Estudiante ce WHERE ce.carrera.nombre LIKE ?1 AND ce.estudiante.ciudad LIKE ?2")
 				.setParameter(1, carrera)
 				.setParameter(2, ciudad);
 		return q.getResultList();

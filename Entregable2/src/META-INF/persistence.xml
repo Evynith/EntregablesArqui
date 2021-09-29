@@ -6,8 +6,9 @@
 	<persistence-unit name="derby">		
 	<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 	
-	<class>entidades.Persona</class>
-	<class>entidades.Direccion</class>
+	<class>entidades.Carrera</class>
+	<class>entidades.Carrera_Estudiante</class>
+	<class>entidades.Estudiante</class>
 		
 		<properties>
 			<!-- Propiedades de configuracion de JDBC para Derby /-->
@@ -23,8 +24,9 @@
 	<persistence-unit name="mysql">	
 	<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 	
-	<class>entidades.Persona</class>
-	<class>entidades.Direccion</class>
+	<class>entidades.Carrera</class>
+	<class>entidades.Carrera_Estudiante</class>
+	<class>entidades.Estudiante</class>
 	
 	<properties>
 		

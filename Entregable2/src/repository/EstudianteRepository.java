@@ -1,25 +1,27 @@
-package entidades;
+package repository;
 
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import entidades.Estudiante;
+
 //c) recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple.
 //@NamedQuery(name = EstudianteRepository.OBTENER_TODOS_ORDENADOS, query = "SELECT e FROM Estudiante e ORDER BY e.carreras")
-public class EstudianteRepository {
+public class EstudianteRepository extends GenericRepositoryJPA<Estudiante> {
 
 	//public static final String OBTENER_TODOS_ORDENADOS = "EstudianteRepository.OBTENER_TODOS_ORDENADOS";
-	private EntityManager em;
 	
-	public EstudianteRepository(EntityManager em) {
-		this.em = em;
+	public EstudianteRepository() {
+		super();
 	}
 	
-	//a) dar de alta un estudiante
-	public void agregarEstudiante(Estudiante e) {
-		em.persist(e);
-	}	
+//	ya está defnido en GenericRepositoryJPA
+//	//a) dar de alta un estudiante
+//	public void agregarEstudiante(Estudiante e) {
+//		em.persist(e);
+//	}	
 	
 	// TODO Refactorizar el casteo
 	//d) recuperar un estudiante, en base a su número de libreta universitaria.
