@@ -20,11 +20,10 @@ public class Main {
 		CarreraRepository cr = new CarreraRepository();
 		er.setEntityManager(em);
 		cr.setEntityManager(em);
-//		
-//		 int deleted1 = em.createQuery("DELETE FROM Carrera_Estudiante").executeUpdate();
-//		 int deleted2 = em.createQuery("DELETE FROM Carrera").executeUpdate();
-//		 int deleted3 = em.createQuery("DELETE FROM Estudiante").executeUpdate();
-//		em.getTransaction().commit();
+		
+		 int deleted1 = em.createNativeQuery("DELETE FROM carrera_estudiante").executeUpdate();
+		 int deleted2 = em.createNativeQuery("DELETE FROM carrera").executeUpdate();
+		 int deleted3 = em.createNativeQuery("DELETE FROM estudiante").executeUpdate();
 		
 		Estudiante federico = new Estudiante(3424, 942342, "Federico", "de Muguruza", "Masculino", 50, "Azul");
 		Estudiante bruno = new Estudiante(77777, 4324234, "Bruno", "Tubino", "Masculino", 40, "Tandil");
@@ -34,18 +33,18 @@ public class Main {
 		Carrera tudai = new Carrera("TUDAI");
 		Carrera tupar = new Carrera("TUPAR");
 		
-//        er.agregar(federico);
-//        er.agregar(bruno);
-//        er.agregar(evy);
-//        er.agregar(fulana);  
-//        
-//        cr.agregar(tudai);
-//        cr.agregar(tupar);
-//        
-//		cr.matricularEstudiante(new Carrera_Estudiante(federico, tudai));
-//		cr.matricularEstudiante(new Carrera_Estudiante(bruno, tudai));
-//		cr.matricularEstudiante(new Carrera_Estudiante(evy, tudai));
-//		cr.matricularEstudiante(new Carrera_Estudiante(fulana, tupar));
+        er.agregar(federico);
+        er.agregar(bruno);
+        er.agregar(evy);
+        er.agregar(fulana);  
+        
+        cr.agregar(tudai);
+        cr.agregar(tupar);
+        
+		cr.matricularEstudiante(new Carrera_Estudiante(federico, tudai));
+		cr.matricularEstudiante(new Carrera_Estudiante(bruno, tudai));
+		cr.matricularEstudiante(new Carrera_Estudiante(evy, tudai));
+		cr.matricularEstudiante(new Carrera_Estudiante(fulana, tupar));
 		
 		System.out.println("Estudiantes ordenados por edad: ");
 		System.out.println(er.getEstudiantesOrdenadosEdad());
