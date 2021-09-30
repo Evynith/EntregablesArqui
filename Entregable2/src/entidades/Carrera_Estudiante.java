@@ -2,6 +2,7 @@ package entidades;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -24,6 +25,8 @@ public class Carrera_Estudiante implements Serializable {
 	private Carrera carrera;  
 	@Column(nullable = false)
 	private Date inscripcion;
+	@Column(nullable = true)
+	private Date finalizacion;
 	@Column(nullable = false)
 	private boolean seGraduo;
 	
@@ -34,6 +37,7 @@ public class Carrera_Estudiante implements Serializable {
 		this.estudiante = e;
 		this.inscripcion = new Date();
 		this.seGraduo = false;
+		this.finalizacion = null;
 	 }
 
 	@Override

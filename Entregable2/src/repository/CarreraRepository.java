@@ -2,7 +2,6 @@ package repository;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import entidades.Carrera;
@@ -34,9 +33,23 @@ public class CarreraRepository extends GenericRepositoryJPA<Carrera> {
 	// TODO PREGUNTAR A QUÉ SE REFIERE CON FILTRADO POR CIUDAD
 	//g) recuperar los estudiantes de una determinada carrera, filtrado por ciudad de residencia.
 	public List<Carrera> getEstudiantesPorCarreraFiltradoCiudad(String carrera, String ciudad) {
-		Query q = this.em.createQuery("SELECT ce.estudiante FROM Carrera_Estudiante ce WHERE ce.carrera.nombre LIKE ?1 AND ce.estudiante.ciudad LIKE ?2")
-				.setParameter(1, carrera)
-				.setParameter(2, ciudad);
+		Query q = this.em.createQuery("SELECT ce.estudiante FROM Carrera_Estudiante ce WHERE ce.carrera.nombre LIKE ?1 AND ce.estudiante.ciudad LIKE ?2");
+				q.setParameter(1, carrera);
+				q.setParameter(2, ciudad);
 		return q.getResultList();
+	}
+	
+	public void graduar(Estudiante e, Carrera c) {
+		Query q = this.em.createQuery("UPDATE Carrera_Estudiante SET seGraduo = true, finalizacion = NOW() WHERE estudiante_dni = ?1 AND carrera_id = ?2");
+				q.setParameter(1, e.getDni());
+				q.setParameter(2, c.getId());
+				q.executeUpdate();
+	}
+	
+	public void reporte() {
+		Query q = em.createQuery("SELECT new app.Reporte(ce.carrera.nombre, ce.estudiante.nombre, ce.seGraduo, ce.inscripcion)"
+		+ " FROM Carrera_Estudiante ce"
+		+ " ORDER BY ce.inscripcion, ce.carrera.nombre");
+		System.out.println(q.getResultList());
 	}
 }

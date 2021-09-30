@@ -3,6 +3,7 @@ package app;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+
 import entidades.Carrera;
 import entidades.Carrera_Estudiante;
 import entidades.Estudiante;
@@ -46,6 +47,8 @@ public class Main {
 		cr.matricularEstudiante(new Carrera_Estudiante(evy, tudai));
 		cr.matricularEstudiante(new Carrera_Estudiante(fulana, tupar));
 		
+		cr.graduar(federico, tudai);
+		
 		System.out.println("Estudiantes ordenados por edad: ");
 		System.out.println(er.getEstudiantesOrdenadosEdad());
 		System.out.println("Estudiante por libreta: ");
@@ -56,6 +59,8 @@ public class Main {
 		System.out.println(cr.getCarreraConEstudiantesOrdenadosCant());
 		System.out.println("Estudiantes de una carrera y ciudad determinadas: ");
 		System.out.println(cr.getEstudiantesPorCarreraFiltradoCiudad("tudai", "Tandil"));
+		System.out.println("Reporte de carreras:");
+		cr.reporte();
 
 		em.getTransaction().commit();
 		em.close();
