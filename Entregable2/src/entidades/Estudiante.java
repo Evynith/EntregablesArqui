@@ -2,6 +2,7 @@ package entidades;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -74,6 +75,13 @@ public class Estudiante {
 	
 	@Override
 	public String toString() {
-		return getNombre() + " | " + getDni();
+		return " Nombre: " + this.nombre
+				+ " - Apellido: " + this.apellido
+				+ " - DNI: " + this.dni
+				+ " - Libreta: " + this.libreta 
+				+ " - Edad: " + this.edad
+				+ " - Género: " + this.genero
+				+ " - Ciudad: " + this.ciudad;
+				
 	}
 }

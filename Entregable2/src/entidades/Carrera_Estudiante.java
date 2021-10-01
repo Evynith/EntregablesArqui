@@ -38,7 +38,15 @@ public class Carrera_Estudiante implements Serializable {
 		this.inscripcion = new Date();
 		this.seGraduo = false;
 		this.finalizacion = null;
-	 }
+	}
+	
+	public Carrera_Estudiante(Estudiante e, Carrera c, Date inscripcion) {
+		this.carrera = c;
+		this.estudiante = e;
+		this.inscripcion = inscripcion;
+		this.seGraduo = false;
+		this.finalizacion = null;
+	}
 
 	@Override
 	public String toString() {

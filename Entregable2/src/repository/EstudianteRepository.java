@@ -2,37 +2,26 @@ package repository;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import entidades.Estudiante;
 
 //c) recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple.
-//@NamedQuery(name = EstudianteRepository.OBTENER_TODOS_ORDENADOS, query = "SELECT e FROM Estudiante e ORDER BY e.carreras")
 public class EstudianteRepository extends GenericRepositoryJPA<Estudiante> {
 
-	//public static final String OBTENER_TODOS_ORDENADOS = "EstudianteRepository.OBTENER_TODOS_ORDENADOS";
-	
 	public EstudianteRepository() {
 		super();
 	}
 	
-//	ya está defnido en GenericRepositoryJPA
-//	//a) dar de alta un estudiante
-//	public void agregarEstudiante(Estudiante e) {
-//		em.persist(e);
-//	}	
-	
-	// TODO Refactorizar el casteo
 	//d) recuperar un estudiante, en base a su número de libreta universitaria.
 	public Estudiante getEstudiantePorLibreta(int libreta) {
-		 Query q = this.em.createQuery("SELECT e FROM Estudiante e WHERE e.libreta = ?1").setParameter(1, 23423423);
-		 return (Estudiante) q.getSingleResult();
+		Query q = this.em.createQuery("SELECT e FROM Estudiante e WHERE e.libreta = ?1").setParameter(1, libreta);
+		return (Estudiante) q.getSingleResult();			
 	}
 	
 	//c) recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple.
-	public List<Estudiante> getEstudiantesOrdenadosEdad() {
-		Query q = this.em.createQuery("SELECT e FROM Estudiante e ORDER BY e.edad");
+	public List<Estudiante> getEstudiantesOrdenadosLibreta() {
+		Query q = this.em.createQuery("SELECT e FROM Estudiante e ORDER BY e.libreta");
 		return q.getResultList();
 	}
 	
