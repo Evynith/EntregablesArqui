@@ -3,6 +3,7 @@ package repository;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.ws.rs.core.Response;
 
@@ -36,8 +37,14 @@ public class EstudianteMySQL implements EstudianteRepository {
 	@Override
 	public Estudiante getEstudiantePorLibreta(int libreta) {
 		EntityManager em = EMF.createEntityManager();
-		Query q = em.createQuery("SELECT e FROM Estudiante e WHERE e.libreta = ?1").setParameter(1, libreta);
-		return (Estudiante) q.getSingleResult();	
+		Estudiante estudiante = null;
+		try {			
+			Query q = em.createQuery("SELECT e FROM Estudiante e WHERE e.libreta = ?1").setParameter(1, libreta);
+			return (Estudiante) q.getSingleResult();	
+		} catch (NoResultException e) {
+			System.out.println("No se encuentra el estudiante.");
+		}
+		return estudiante;
 	}
 
 	@Override

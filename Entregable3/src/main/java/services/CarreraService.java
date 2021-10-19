@@ -16,7 +16,8 @@ public class CarreraService {
 		Estudiante e = emsql.getEstudiantePorLibreta(libreta);
 		Carrera c = cmsql.getCarrera(carrera);
 		if (e != null) {
-			Carrera_Estudiante ce = new Carrera_Estudiante(e, c);			
+			Carrera_Estudiante ce = new Carrera_Estudiante(e, c);
+			return ce;
 		}
 		return null;
 	}

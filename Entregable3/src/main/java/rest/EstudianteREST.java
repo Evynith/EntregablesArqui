@@ -3,10 +3,10 @@ package rest;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -38,18 +38,20 @@ public class EstudianteREST {
 	}
 	
 	// recuperar un estudiante, en base a su número de libreta universitaria.
-	@GET
-	@Path("/libreta/{libreta}")
+	@POST
+	@Path("/libreta")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Estudiante getEstudiantePorLibreta(@PathParam("libreta") int libreta){	
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Estudiante getEstudiantePorLibreta(@FormParam("libreta") int libreta){	
 		return msql.getEstudiantePorLibreta(libreta);
 	}
 	
 	// e) recuperar todos los estudiantes, en base a su género.
-	@GET
-	@Path("/genero/{genero}")
+	@POST
+	@Path("/genero")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Estudiante> getEstudiantePorGenero(@PathParam("genero") String genero){	
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public List<Estudiante> getEstudiantePorGenero(@FormParam("genero") String genero){	
 		return msql.getEstudiantePorGenero(genero);
 	}
 }

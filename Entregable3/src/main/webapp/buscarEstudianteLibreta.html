@@ -5,23 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <title>Document</title>
+    <title>Buscar estudiante por libreta</title>
 </head>
 <body>
 
-	<form action="api/carreras" method="post">
+	<form action="api/estudiantes/libreta" method="get">
 	  <div class="mb-3">
 	    <label for="exampleInputPassword1" class="form-label">Libreta</label>
 	    <input type="number" class="form-control" id="exampleInputPassword1" name="libreta" value="942342">
 	  </div>
-	  <div class="mb-3">
-		<select class="form-select" aria-label="Default select example" name="carrera">
-		  <option value="TUDAI" selected>TUDAI</option>
-		  <option value="TUPAR">TUPAR</option>
-		  	  <option value="Biología">Biología</option>
-		</select>
-	  </div>
-	  <button type="submit" class="btn btn-primary">Matricular</button>
+	  <button type="submit" class="btn btn-primary">Buscar</button>
 	</form>
     
 </body>

@@ -27,15 +27,12 @@ public class Carrera_Estudiante implements Serializable {
 	private Date inscripcion = new Date();
 	@Column(nullable = true)
 	private Date finalizacion;
-	@Column(nullable = false)
-	private boolean seGraduo;
 	
 	public Carrera_Estudiante() {}
 	 
 	public Carrera_Estudiante(Estudiante estudiante, Carrera carrera) {
 		this.estudiante = estudiante;
 		this.carrera = carrera;
-		this.seGraduo = false;
 		this.finalizacion = null;
 	}
 	
@@ -43,7 +40,6 @@ public class Carrera_Estudiante implements Serializable {
 		this.carrera = c;
 		this.estudiante = e;
 		this.inscripcion = inscripcion;
-		this.seGraduo = false;
 		this.finalizacion = null;
 	}
 	
@@ -63,14 +59,8 @@ public class Carrera_Estudiante implements Serializable {
 		return this.finalizacion;
 	}
 	
-	public boolean isSeGraduo() {
-		return seGraduo;
-	}
-
-
 	@Override
 	public String toString() {
-		return "Carrera_Estudiante [estudiante=" + estudiante + ", carrera=" + carrera + ", inscripcion=" + inscripcion
-				+ ", seGraduo=" + seGraduo + "]";
+		return "Carrera_Estudiante [estudiante=" + estudiante + ", carrera=" + carrera + ", inscripcion=" + inscripcion;
 	}
 }

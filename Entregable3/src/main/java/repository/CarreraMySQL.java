@@ -47,7 +47,7 @@ public class CarreraMySQL implements CarreraRepository {
 	public Carrera getCarrera(String carrera) {
 		EntityManager em = EMF.createEntityManager();
 		Query q = em.createQuery("SELECT c"
-				+ " FROM Carrera"
+				+ " FROM Carrera c"
 				+ " WHERE c.nombre LIKE ?1")
 				.setParameter(1,  carrera);
 		return (Carrera) q.getSingleResult();
@@ -65,9 +65,10 @@ public class CarreraMySQL implements CarreraRepository {
 	@Override
 	public List<ReporteEstudiante> getReporte() {
 		EntityManager em = EMF.createEntityManager();
-		Query q = em.createQuery("SELECT new app.ReporteEstudiante(ce.carrera.nombre, ce.inscripcion, COUNT(ce.seGraduo = false), COUNT(ce.seGraduo = true)"
+		Query q = em.createQuery("SELECT new app.ReporteEstudiante(ce.carrera.nombre, YEAR(ce.inscripcion), COUNT(ce.inscripcion), COUNT(ce.finalizacion))"
 				+ " FROM Carrera_Estudiante ce"
-				+ " GROUP BY YEAR(ce.inscripcion)");
+				+ " GROUP BY ce.carrera.nombre, YEAR(ce.inscripcion)"
+				+ " ORDER BY YEAR(ce.inscripcion)");
 				return q.getResultList();
 	}
 	

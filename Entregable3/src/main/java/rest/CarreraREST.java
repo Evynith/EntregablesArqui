@@ -7,7 +7,6 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -17,6 +16,7 @@ import entidades.Carrera;
 import entidades.Carrera_Estudiante;
 import entidades.Estudiante;
 import repository.CarreraMySQL;
+import repository.EstudianteMySQL;
 import services.CarreraService;
 
 @Path("/carreras")
@@ -36,19 +36,31 @@ public class CarreraREST {
 	// matricular un estudiante en una carrera
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes("application/x-www-form-urlencoded;charset=UTF-8")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response matricularEstudiante(@FormParam("libreta") int libreta, @FormParam("carrera") String carrera){	
-		try {
-			Carrera_Estudiante ce = this.cs.matricularEstudiante(libreta, carrera);
-			if (ce != null) {
-				msql.matricularEstudiante(ce);
-				return Response.status(201).build();	
-			}
-				
-		} catch (Exception exc) {
-			System.out.println(exc.getMessage());
-		}
-		return Response.status(400).build();				
+//		System.out.println(libreta + carrera);
+//		try {
+//			Carrera_Estudiante ce = this.cs.matricularEstudiante(libreta, carrera);
+//			if (ce != null) {
+//				msql.matricularEstudiante(ce);
+//				return Response.status(201).build();	
+//			}
+//				
+//		} catch (NoResultException nre) {
+//			System.out.println(nre.getMessage());
+//		}
+//		return Response.status(400).build();	
+		
+		EstudianteMySQL emsql = new EstudianteMySQL();
+		CarreraMySQL cmsql = new CarreraMySQL();
+		Estudiante e = emsql.getEstudiantePorLibreta(libreta);
+		Carrera c = cmsql.getCarrera(carrera);
+		if (e != null) {
+			Carrera_Estudiante ce = new Carrera_Estudiante(e, c);
+			msql.matricularEstudiante(ce);
+			return Response.status(201).build();	
+		} 
+		return Response.status(400).build();	
 	}
 	
 	// recuperar las carreras con estudiantes inscriptos, y ordenar por cantidad de inscriptos.
@@ -60,10 +72,11 @@ public class CarreraREST {
 	}
 	
 	// recuperar los estudiantes de una determinada carrera, filtrado por ciudad de residencia.
-	@GET
-	@Path("/{carrera}/{ciudad}")
+	@POST
+	@Path("/carrera-ciudad")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Estudiante> getEstudiantesPorCarreraFiltradoCiudad(@PathParam("carrera") String carrera, @PathParam("ciudad") String ciudad){	
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public List<Estudiante> getEstudiantesPorCarreraFiltradoCiudad(@FormParam("carrera") String carrera, @FormParam("ciudad") String ciudad){	
 		return msql.getEstudiantesPorCarreraFiltradoCiudad(carrera, ciudad);
 	}
 	
