@@ -8,13 +8,14 @@ import repository.EstudianteMySQL;
 
 public class CarreraService {
 	
+	private EstudianteMySQL emsql = new EstudianteMySQL();
+	private CarreraMySQL cmsql = new CarreraMySQL(); 
+	
 	public CarreraService() {}
 	
-	public Carrera_Estudiante matricularEstudiante(int libreta, String carrera){	
-		EstudianteMySQL emsql = new EstudianteMySQL();
-		CarreraMySQL cmsql = new CarreraMySQL();
-		Estudiante e = emsql.getEstudiantePorLibreta(libreta);
-		Carrera c = cmsql.getCarrera(carrera);
+	public Carrera_Estudiante validarLibreta(int libreta, String carrera){	
+		Estudiante e = this.emsql.getEstudiantePorLibreta(libreta);
+		Carrera c = this.cmsql.getCarrera(carrera);
 		if (e != null) {
 			Carrera_Estudiante ce = new Carrera_Estudiante(e, c);
 			return ce;

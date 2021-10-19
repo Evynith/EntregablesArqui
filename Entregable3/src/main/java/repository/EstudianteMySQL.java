@@ -1,5 +1,6 @@
 package repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -48,11 +49,14 @@ public class EstudianteMySQL implements EstudianteRepository {
 	}
 
 	@Override
-	public List<Estudiante> getEstudiantePorGenero(String genero) {
+	public List<Estudiante> getEstudiantesPorGenero(String genero) {
 		EntityManager em = EMF.createEntityManager();
-		Query q = em.createQuery("SELECT e FROM Estudiante e WHERE e.genero = ?1").setParameter(1, genero);
-		return q.getResultList();
+		try {
+			Query q = em.createQuery("SELECT e FROM Estudiante e WHERE e.genero = ?1").setParameter(1, genero);
+			return q.getResultList();					
+		} catch (NoResultException e) {
+			System.out.println("No hay estudiantes por ese género.");
+			return new ArrayList<Estudiante>();
+		}
 	}
-	
-	
 }

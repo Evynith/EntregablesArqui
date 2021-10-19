@@ -16,7 +16,6 @@ import entidades.Carrera;
 import entidades.Carrera_Estudiante;
 import entidades.Estudiante;
 import repository.CarreraMySQL;
-import repository.EstudianteMySQL;
 import services.CarreraService;
 
 @Path("/carreras")
@@ -37,29 +36,14 @@ public class CarreraREST {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response matricularEstudiante(@FormParam("libreta") int libreta, @FormParam("carrera") String carrera){	
-//		System.out.println(libreta + carrera);
-//		try {
-//			Carrera_Estudiante ce = this.cs.matricularEstudiante(libreta, carrera);
-//			if (ce != null) {
-//				msql.matricularEstudiante(ce);
-//				return Response.status(201).build();	
-//			}
-//				
-//		} catch (NoResultException nre) {
-//			System.out.println(nre.getMessage());
-//		}
-//		return Response.status(400).build();	
+	public Response matricularEstudiante(@FormParam("libreta") int libreta, @FormParam("carrera") String carrera){		
+
+		Carrera_Estudiante ce = this.cs.validarLibreta(libreta, carrera);
 		
-		EstudianteMySQL emsql = new EstudianteMySQL();
-		CarreraMySQL cmsql = new CarreraMySQL();
-		Estudiante e = emsql.getEstudiantePorLibreta(libreta);
-		Carrera c = cmsql.getCarrera(carrera);
-		if (e != null) {
-			Carrera_Estudiante ce = new Carrera_Estudiante(e, c);
+		if (ce != null) {
 			msql.matricularEstudiante(ce);
 			return Response.status(201).build();	
-		} 
+		}
 		return Response.status(400).build();	
 	}
 	

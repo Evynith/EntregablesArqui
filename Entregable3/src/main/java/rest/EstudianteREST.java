@@ -13,12 +13,14 @@ import javax.ws.rs.core.Response;
 
 import entidades.Estudiante;
 import repository.EstudianteMySQL;
+import services.EstudianteService;
 
 
 @Path("/estudiantes")
 public class EstudianteREST {
 
 	private EstudianteMySQL msql = new EstudianteMySQL();
+	private EstudianteService es = new EstudianteService();
 	
 	public EstudianteREST() {}
 	
@@ -32,9 +34,16 @@ public class EstudianteREST {
 	// dar de alta un estudiante
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response postEstudiante(Estudiante e){
-		return msql.save(e);
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response postEstudiante(@FormParam("nombre") String nombre, @FormParam("apellido") String apellido,
+			@FormParam("dni") int dni, @FormParam("libreta") int libreta, @FormParam("genero") String genero,
+			@FormParam("edad") int edad, @FormParam("ciudad") String ciudad){
+		Response r = this.es.validarDatos(nombre, apellido, dni, libreta, genero, edad, ciudad);
+		if (r.getStatus() == 200) {
+			Estudiante e = new Estudiante(dni, libreta, nombre, apellido, genero, edad, ciudad);
+			return msql.save(e);			
+		}
+		return r;
 	}
 	
 	// recuperar un estudiante, en base a su número de libreta universitaria.
@@ -51,7 +60,7 @@ public class EstudianteREST {
 	@Path("/genero")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public List<Estudiante> getEstudiantePorGenero(@FormParam("genero") String genero){	
-		return msql.getEstudiantePorGenero(genero);
+	public List<Estudiante> getEstudiantesPorGenero(@FormParam("genero") String genero){	
+		return msql.getEstudiantesPorGenero(genero);
 	}
 }

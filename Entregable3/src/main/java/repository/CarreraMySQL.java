@@ -1,8 +1,10 @@
 package repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.ws.rs.core.Response;
 
@@ -31,7 +33,6 @@ public class CarreraMySQL implements CarreraRepository {
 			em.getTransaction().commit();
 			return Response.status(201).build();			
 		} catch (Exception exc) {
-			System.out.println(exc.getMessage());
 			return Response.status(500).build();	
 		}
 	}
@@ -56,10 +57,15 @@ public class CarreraMySQL implements CarreraRepository {
 	@Override
 	public List<Estudiante> getEstudiantesPorCarreraFiltradoCiudad(String carrera, String ciudad) {
 		EntityManager em = EMF.createEntityManager();
-		Query q = em.createQuery("SELECT new app.EstudiantesFiltradoCarreraCiudad(ce.carrera.nombre, ce.estudiante) FROM Carrera_Estudiante ce WHERE ce.carrera.nombre LIKE ?1 AND ce.estudiante.ciudad LIKE ?2");
-		q.setParameter(1, carrera);
-		q.setParameter(2, ciudad);
-		return q.getResultList();
+		try {
+			Query q = em.createQuery("SELECT new app.EstudiantesFiltradoCarreraCiudad(ce.carrera.nombre, ce.estudiante) FROM Carrera_Estudiante ce WHERE ce.carrera.nombre LIKE ?1 AND ce.estudiante.ciudad LIKE ?2");
+			q.setParameter(1, carrera);
+			q.setParameter(2, ciudad);
+			return q.getResultList();			
+		} catch (NoResultException e) {
+			System.out.println("No se encuentran estudiantes.");
+			return new ArrayList<Estudiante>();
+		}
 	}
 
 	@Override
