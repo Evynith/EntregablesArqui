@@ -11,7 +11,7 @@ import javax.ws.rs.core.Response;
 import entidades.Estudiante;
 import rest.EMF;
 
-public class EstudianteMySQL implements EstudianteRepository {
+public class EstudianteMySQL extends GenericRepositoryJPA<Estudiante> implements EstudianteRepository {
 
 	@Override
 	public List<Estudiante> getAll() {

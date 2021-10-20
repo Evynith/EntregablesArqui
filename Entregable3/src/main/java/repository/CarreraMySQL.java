@@ -14,7 +14,7 @@ import entidades.Carrera_Estudiante;
 import entidades.Estudiante;
 import rest.EMF;
 
-public class CarreraMySQL implements CarreraRepository {
+public class CarreraMySQL extends GenericRepositoryJPA<Carrera> implements CarreraRepository {
 
 	@Override
 	public List<Carrera> getAll() {
