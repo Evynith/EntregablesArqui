@@ -74,7 +74,7 @@ public class CarreraMySQL extends GenericRepositoryJPA<Carrera> implements Carre
 		Query q = em.createQuery("SELECT new app.ReporteEstudiante(ce.carrera.nombre, YEAR(ce.inscripcion), COUNT(ce.inscripcion), COUNT(ce.finalizacion))"
 				+ " FROM Carrera_Estudiante ce"
 				+ " GROUP BY ce.carrera.nombre, YEAR(ce.inscripcion)"
-				+ " ORDER BY YEAR(ce.inscripcion)");
+				+ " ORDER BY YEAR(ce.inscripcion), ce.carrera.nombre");
 				return q.getResultList();
 	}
 	

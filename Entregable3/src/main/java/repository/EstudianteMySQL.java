@@ -16,7 +16,7 @@ public class EstudianteMySQL extends GenericRepositoryJPA<Estudiante> implements
 	@Override
 	public List<Estudiante> getAll() {
 		EntityManager em = EMF.createEntityManager();
-		Query q = em.createQuery("SELECT e.nombre, e.apellido, e.edad, e.genero"
+		Query q = em.createQuery("SELECT new app.EstudiantesOrdenados(e.nombre, e.apellido, e.edad, e.genero)"
 				+ " FROM Estudiante e"
 				+ " ORDER BY e.edad");
 		return q.getResultList();
