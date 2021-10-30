@@ -32,7 +32,7 @@ public class TicketServicio {
 		return this.ticket.findById(id);
 	}
 	
-	public List<Ticket> getTicketsByCliente(int id){
-		return this.cliente.getTicketsByCliente(id);
-	}
+//	public List<Ticket> getTicketsByCliente(int id){
+//		return this.cliente.getTicketsByCliente(id);
+//	}
 }

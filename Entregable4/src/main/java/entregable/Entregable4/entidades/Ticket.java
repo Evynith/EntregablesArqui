@@ -13,7 +13,7 @@ import javax.persistence.IdClass;
 import javax.persistence.OneToMany;
 
 @Entity
-@IdClass(IDTicketProducto.class)
+//@IdClass(IDTicketProducto.class)
 public class Ticket {
 
 	@Id
