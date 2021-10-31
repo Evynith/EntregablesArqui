@@ -12,8 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 @Entity
-//@IdClass(IDTicketProducto.class)
 public class Ticket {
 
 	@Id
@@ -22,6 +24,7 @@ public class Ticket {
 	@Column(nullable = false)
 	private Date fechaEmision;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ticket") 
+	@Cascade(CascadeType.PERSIST)
 	private List<TicketProducto> productos;
 
 	public Ticket() {

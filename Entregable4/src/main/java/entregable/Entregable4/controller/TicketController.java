@@ -2,6 +2,7 @@ package entregable.Entregable4.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,17 +14,18 @@ import entregable.Entregable4.entidades.Ticket;
 @RequestMapping("/ventas")
 public class TicketController {
 	
+	@Autowired
 	private TicketServicio ticketServicio;
 
-//	@GetMapping("")
-//	public String saludo() {
-//		return "hola";
-//	}
-	
 	@GetMapping("")
-	public List<Ticket> getAll() {
-		return this.ticketServicio.getTickets();
+	public String saludo() {
+		return "hola";
 	}
+	
+//	@GetMapping("")
+//	public List<Ticket> getAll() {
+//		return this.ticketServicio.getTickets();
+//	}
 	
 	
 	
