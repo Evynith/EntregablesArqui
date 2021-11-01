@@ -1,6 +1,7 @@
 package entregable.Entregable4.entidades;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import entregable.Entregable4.servicios.ProductoServicio;
+
 @Entity
 @Table(name = "ticket_producto")
 @IdClass(IDTicketProducto.class)
@@ -18,14 +23,16 @@ public class TicketProducto implements Serializable {
 
 	@Id
 	@ManyToOne
-	@JoinColumn(insertable = true, nullable = false)
+	@JoinColumn(insertable = true, nullable = false, referencedColumnName = "ID")
 	private Producto producto;
 	@Id
 	@ManyToOne 
-	@JoinColumn(insertable = true, nullable = false)
+	@JoinColumn(insertable = true, nullable = false, referencedColumnName = "ID")
 	private Ticket ticket;  
 	@Column(nullable = false)
 	private int cantidadProducto;
+	
+	private int idProducto;
 	
 	public TicketProducto() {
 		super();
@@ -56,12 +63,12 @@ public class TicketProducto implements Serializable {
 		this.cantidadProducto = cantidadProducto;
 	}
 
-	public TicketProducto(Producto producto, Ticket ticket, int cantidadProducto) {
-		super();
-		this.producto = producto;
-		this.ticket = ticket;
-		this.cantidadProducto = cantidadProducto;
-	}
+//	public TicketProducto(Producto producto, Ticket ticket, int cantidadProducto) {
+//		super();
+//		this.producto = producto;
+//		this.ticket = ticket;
+//		this.cantidadProducto = cantidadProducto;
+//	}
 	
 	public TicketProducto(Producto producto, int cantidadProducto) {
 		super();
@@ -70,7 +77,16 @@ public class TicketProducto implements Serializable {
 		this.cantidadProducto = cantidadProducto;
 	}
 	
-	
+	public int getIdProducto() {
+		return idProducto;
+	}
+
+	public TicketProducto(int idProducto, int cantidadProducto) {
+		super();
+		this.idProducto = idProducto;
+//		this.ticket = ticket;
+		this.cantidadProducto = cantidadProducto;
+	}
 	
 }
 

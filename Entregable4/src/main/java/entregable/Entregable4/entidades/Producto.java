@@ -23,9 +23,8 @@ public class Producto {
 	@Column
 	private String nombre;
 	@Column
-	private int cantidad;
+	private int stock;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "producto") 
-	@Cascade(CascadeType.PERSIST)
 	private List<TicketProducto> tickets;
 
 	public Producto() {
@@ -35,16 +34,8 @@ public class Producto {
 	public Producto(String nombre, int cantidad) {
 		super();
 		this.nombre = nombre;
-		this.cantidad = cantidad;
+		this.stock = cantidad;
 		this.tickets = new ArrayList<TicketProducto>();
-	}
-	
-	public Producto(String nombre, int cantidad, List<TicketProducto> tickets) {
-		super();
-		this.nombre = nombre;
-		this.cantidad = cantidad;
-		this.tickets = tickets;
-//		this.tickets = new ArrayList<TicketProducto>();
 	}
 
 	public String getNombre() {
@@ -56,11 +47,11 @@ public class Producto {
 	}
 
 	public int getCantidad() {
-		return cantidad;
+		return stock;
 	}
 
 	public void setCantidad(int cantidad) {
-		this.cantidad = cantidad;
+		this.stock = cantidad;
 	}
 
 	public List<TicketProducto> getTickets() {

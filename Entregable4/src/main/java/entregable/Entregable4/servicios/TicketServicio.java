@@ -20,8 +20,9 @@ public class TicketServicio {
 	private RepositorioCliente cliente;
 	
 	@Transactional
-	public void addTicket(Ticket t) {
+	public boolean addTicket(Ticket t) {
 		this.ticket.save(t);
+		return true;
 	}
 	
 	public List<Ticket> getTickets() {

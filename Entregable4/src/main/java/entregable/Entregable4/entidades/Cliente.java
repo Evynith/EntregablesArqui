@@ -23,8 +23,7 @@ public class Cliente {
 	private int dni;
 	@Column
 	private String nombre;
-	@OneToMany
-	@Cascade(CascadeType.PERSIST)
+	@OneToMany(mappedBy = "cliente")
 	private List<Ticket> tickets;
 	
 	public Cliente() {
