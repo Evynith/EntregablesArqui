@@ -5,12 +5,14 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "ticket_producto")
+@IdClass(IDTicketProducto.class)
 public class TicketProducto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -58,6 +60,13 @@ public class TicketProducto implements Serializable {
 		super();
 		this.producto = producto;
 		this.ticket = ticket;
+		this.cantidadProducto = cantidadProducto;
+	}
+	
+	public TicketProducto(Producto producto, int cantidadProducto) {
+		super();
+		this.producto = producto;
+//		this.ticket = ticket;
 		this.cantidadProducto = cantidadProducto;
 	}
 	

@@ -1,32 +1,48 @@
 package entregable.Entregable4.entidades;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 public class Cliente {
 
 	@Id
-//	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int DNI;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
+	@Column
+	private int dni;
 	@Column
 	private String nombre;
 	@OneToMany
+	@Cascade(CascadeType.PERSIST)
 	private List<Ticket> tickets;
 	
 	public Cliente() {
 		super();
 	}
 
-	public Cliente(int DNI, String nombre, List<Ticket> tickets) {
+	public Cliente(int dni, String nombre) {
+		super();
+		this.nombre = nombre;
+		this.dni = dni;
+		this.tickets = new ArrayList<Ticket>();
+	}
+	
+	public Cliente(int dni, String nombre, List<Ticket> tickets) {
 		super();
 		this.nombre = nombre;
 		this.tickets = tickets;
-		this.DNI = DNI;
+		this.dni = dni;
 	}
 
 	public String getNombre() {
@@ -45,11 +61,13 @@ public class Cliente {
 		this.tickets = tickets;
 	}
 
-	public int getDNI() {
-		return DNI;
+	public int getDni() {
+		return dni;
 	}
 	
-	
+	public int getId() {
+		return id;
+	}
 	
 	
 }

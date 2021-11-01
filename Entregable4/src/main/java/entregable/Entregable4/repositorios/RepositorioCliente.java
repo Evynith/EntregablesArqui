@@ -10,8 +10,8 @@ import entregable.Entregable4.entidades.Ticket;
 
 public interface RepositorioCliente extends JpaRepository<Cliente, Integer> {
 
-	@Query("SELECT c.tickets FROM Clientes c WHERE c.id=:id")
-	List<Ticket> getTicketsByCliente(int id);
+//	@Query("SELECT c.tickets FROM Cliente c WHERE c.id=:id")
+//	List<Ticket> getTicketsByCliente(int id);
 
 
 }
