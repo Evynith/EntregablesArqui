@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
@@ -23,11 +24,11 @@ public class TicketProducto implements Serializable {
 
 	@Id
 	@ManyToOne
-	@JoinColumn(insertable = true, nullable = false, referencedColumnName = "ID")
+	@JoinColumn(insertable = true, nullable = false)
 	private Producto producto;
 	@Id
-	@ManyToOne 
-	@JoinColumn(insertable = true, nullable = false, referencedColumnName = "ID")
+	@ManyToOne
+	@JoinColumn(insertable = true, nullable = false)
 	private Ticket ticket;  
 	@Column(nullable = false)
 	private int cantidadProducto;

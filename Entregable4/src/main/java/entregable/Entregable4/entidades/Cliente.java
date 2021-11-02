@@ -23,8 +23,8 @@ public class Cliente {
 	private int dni;
 	@Column
 	private String nombre;
-	@OneToMany(mappedBy = "cliente")
-	private List<Ticket> tickets;
+//	@OneToMany(mappedBy = "cliente")
+//	private List<Ticket> tickets;
 	
 	public Cliente() {
 		super();
@@ -34,13 +34,13 @@ public class Cliente {
 		super();
 		this.nombre = nombre;
 		this.dni = dni;
-		this.tickets = new ArrayList<Ticket>();
+//		this.tickets = new ArrayList<Ticket>();
 	}
 	
 	public Cliente(int dni, String nombre, List<Ticket> tickets) {
 		super();
 		this.nombre = nombre;
-		this.tickets = tickets;
+//		this.tickets = tickets;
 		this.dni = dni;
 	}
 
@@ -52,13 +52,13 @@ public class Cliente {
 		this.nombre = nombre;
 	}
 
-	public List<Ticket> getTickets() {
-		return tickets;
-	}
-
-	public void setTickets(List<Ticket> tickets) {
-		this.tickets = tickets;
-	}
+//	public List<Ticket> getTickets() {
+//		return tickets;
+//	}
+//
+//	public void setTickets(List<Ticket> tickets) {
+//		this.tickets = tickets;
+//	}
 
 	public int getDni() {
 		return dni;

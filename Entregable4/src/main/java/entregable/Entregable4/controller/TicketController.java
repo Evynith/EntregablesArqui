@@ -50,7 +50,8 @@ public class TicketController {
 			Optional<Producto> prod= this.productoServicio.getProducto(p.getIdProducto());
 			if (prod.isPresent()) {
 				p.setProducto(prod.get());
-			}			
+				p.setTicket(t);
+			}	
 		});
 		boolean ok = this.ticketServicio.addTicket(t);
 		if (!ok) {
