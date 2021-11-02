@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import entregable.Entregable4.entidades.Ticket;
-import entregable.Entregable4.repositorios.RepositorioCliente;
 import entregable.Entregable4.repositorios.RepositorioTicket;
 
 @Service
@@ -16,9 +15,7 @@ public class TicketServicio {
 
 	@Autowired
 	private RepositorioTicket ticket;
-	@Autowired
-	private RepositorioCliente cliente;
-	
+
 	@Transactional
 	public boolean addTicket(Ticket t) {
 		this.ticket.save(t);
@@ -26,14 +23,12 @@ public class TicketServicio {
 	}
 	
 	public List<Ticket> getTickets() {
-		return this.ticket.findAll();
+		return this.ticket.findAll();		
 	}
 	
 	public Optional<Ticket> getTicketById(int id){
 		return this.ticket.findById(id);
 	}
+
 	
-//	public List<Ticket> getTicketsByCliente(int id){
-//		return this.cliente.getTicketsByCliente(id);
-//	}
 }

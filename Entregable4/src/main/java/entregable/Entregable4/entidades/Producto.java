@@ -1,11 +1,10 @@
 package entregable.Entregable4.entidades;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,7 +14,7 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 @Entity
-public class Producto {
+public class Producto{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,9 +23,9 @@ public class Producto {
 	private String nombre;
 	@Column
 	private int stock;
-//	@OneToMany(mappedBy = "producto") 
-//	@Cascade(CascadeType.PERSIST)
-//	private List<TicketProducto> tickets;
+	@OneToMany(orphanRemoval = true, mappedBy = "producto") 
+	@Cascade(CascadeType.ALL)
+	private List<TicketProducto> tickets;
 
 	public Producto() {
 		super();
@@ -65,6 +64,11 @@ public class Producto {
 
 	public int getID() {
 		return ID;
+	}
+
+	@Override
+	public String toString() {
+		return "Producto [nombre=" + nombre + "]";
 	}
 	
 	

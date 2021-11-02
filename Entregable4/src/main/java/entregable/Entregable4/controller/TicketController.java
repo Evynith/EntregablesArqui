@@ -47,7 +47,7 @@ public class TicketController {
 			t.setCliente( cli.get());
 		}
 		t.getProductos().forEach(p -> {
-			Optional<Producto> prod= this.productoServicio.getProducto(p.getIdProducto());
+			Optional<Producto> prod= this.productoServicio.getProducto(p.getIdProduct());
 			if (prod.isPresent()) {
 				p.setProducto(prod.get());
 				p.setTicket(t);

@@ -4,15 +4,19 @@ import java.io.Serializable;
 import java.util.Optional;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import entregable.Entregable4.servicios.ProductoServicio;
 
@@ -20,20 +24,25 @@ import entregable.Entregable4.servicios.ProductoServicio;
 @Table(name = "ticket_producto")
 @IdClass(IDTicketProducto.class)
 public class TicketProducto implements Serializable {
+
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@ManyToOne
-	@JoinColumn(insertable = true, nullable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(insertable = true, nullable = false, name="id_producto")
 	private Producto producto;
+	
 	@Id
-	@ManyToOne
-	@JoinColumn(insertable = true, nullable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(insertable = true, nullable = false, name= "id_ticket")
 	private Ticket ticket;  
 	@Column(nullable = false)
 	private int cantidadProducto;
 	
-	private int idProducto;
+	private int idProduct;
 	
 	public TicketProducto() {
 		super();
@@ -47,7 +56,7 @@ public class TicketProducto implements Serializable {
 	public void setProducto(Producto producto) {
 		this.producto = producto;
 	}
-
+@JsonIgnore
 	public Ticket getTicket() {
 		return ticket;
 	}
@@ -63,31 +72,34 @@ public class TicketProducto implements Serializable {
 	public void setCantidadProducto(int cantidadProducto) {
 		this.cantidadProducto = cantidadProducto;
 	}
-
-//	public TicketProducto(Producto producto, Ticket ticket, int cantidadProducto) {
-//		super();
-//		this.producto = producto;
-//		this.ticket = ticket;
-//		this.cantidadProducto = cantidadProducto;
-//	}
 	
+	public int getIdProduct() {
+		return idProduct;
+	}
+
+	public void setIdProduct(int idProduct) {
+		this.idProduct = idProduct;
+	}
+
 	public TicketProducto(Producto producto, int cantidadProducto) {
 		super();
 		this.producto = producto;
 //		this.ticket = ticket;
 		this.cantidadProducto = cantidadProducto;
 	}
-	
-	public int getIdProducto() {
-		return idProducto;
-	}
 
-	public TicketProducto(int idProducto, int cantidadProducto) {
+	public TicketProducto(int idProduct, int cantidadProducto) {
 		super();
-		this.idProducto = idProducto;
+		this.idProduct = idProduct;
 //		this.ticket = ticket;
 		this.cantidadProducto = cantidadProducto;
 	}
+
+	@Override
+	public String toString() {
+		return "";
+	}
+	
 	
 }
 
