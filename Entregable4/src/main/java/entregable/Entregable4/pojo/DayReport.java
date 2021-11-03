@@ -4,18 +4,18 @@ import java.util.Date;
 
 public class DayReport {
 
-	private Date fecha;
+	private String fecha;
 	private double total;
 	public DayReport() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public DayReport(Date fecha, double total) {
+	public DayReport(String fecha, double total) {
 		super();
 		this.fecha = fecha;
 		this.total = total;
 	}
-	public Date getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
 	public double getTotal() {

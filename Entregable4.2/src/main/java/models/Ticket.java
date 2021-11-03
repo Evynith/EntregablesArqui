@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 @Entity
@@ -20,6 +22,7 @@ public class Ticket {
 	@ManyToOne
 	private Client client;
 	@Column
+	@Temporal(TemporalType.DATE)
 	private Date created_at = new Date();
 	
 	public Ticket() {}

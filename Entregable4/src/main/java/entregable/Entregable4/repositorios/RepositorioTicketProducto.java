@@ -22,11 +22,11 @@ public interface RepositorioTicketProducto extends JpaRepository<TicketProducto,
 			+ " GROUP BY c")
 	public List<ClientReport> getClientsReport();
 	
-	@Query("SELECT new entregable.Entregable4.pojo.DayReport(t.fechaEmision, SUM(tp.cantidadProducto * p.monto))"
+	@Query("SELECT new entregable.Entregable4.pojo.DayReport(year(t.fechaEmision)||'-'||month(t.fechaEmision)||'-'||day( t.fechaEmision), SUM(tp.cantidadProducto * p.monto))"
 			+ " FROM TicketProducto tp"
 			+ " JOIN tp.ticket t"
 			+ " JOIN tp.producto p"
-			+ " GROUP BY t.fechaEmision")
+			+ " GROUP BY year(t.fechaEmision)||'-'||month(t.fechaEmision)||'-'||day( t.fechaEmision)")
 	public List<DayReport> getDayReport();
 	
 	@Query("SELECT new entregable.Entregable4.pojo.ProductReport(p, SUM(tp.cantidadProducto * p.monto))"
