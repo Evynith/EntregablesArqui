@@ -23,6 +23,8 @@ public class Producto{
 	private String nombre;
 	@Column
 	private int stock;
+	@Column
+	private double monto;
 	//orphanRemoval = true,  es para poder borrar aunque tenga referenciado
 	@OneToMany(mappedBy = "producto") 
 	private List<TicketProducto> tickets;
@@ -31,7 +33,7 @@ public class Producto{
 		super();
 	}
 
-	public Producto(String nombre, int cantidad) {
+	public Producto(String nombre, int cantidad, double monto) {
 		super();
 		this.nombre = nombre;
 		this.stock = cantidad;
@@ -64,6 +66,14 @@ public class Producto{
 
 	public int getID() {
 		return ID;
+	}
+
+	public double getMonto() {
+		return monto;
+	}
+
+	public void setMonto(double monto) {
+		this.monto = monto;
 	}
 
 	@Override

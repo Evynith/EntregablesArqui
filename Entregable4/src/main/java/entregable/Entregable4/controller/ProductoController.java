@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import entregable.Entregable4.entidades.Producto;
+import entregable.Entregable4.pojo.ProductReport;
 import entregable.Entregable4.servicios.ProductoServicio;
+import entregable.Entregable4.servicios.TicketProductoServicio;
 
 @RestController
 @RequestMapping("/productos")
@@ -24,6 +26,8 @@ public class ProductoController {
 	
 	@Autowired
 	private ProductoServicio productoServicio;
+	@Autowired
+	private TicketProductoServicio ticketProductoServicio;
 	
 	@GetMapping("")
 	public List<Producto> getAll() {
@@ -38,6 +42,10 @@ public class ProductoController {
 		}
 		return new ResponseEntity<Producto>(c, HttpStatus.OK);
 	}
+	@GetMapping("/mayor")
+	public ProductReport getMayorRecaudacion() {
+		return this.ticketProductoServicio.getMasVendido();
+	}
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<Producto> putProducto(@PathVariable("id")int id,@RequestBody Producto c) {
@@ -45,6 +53,7 @@ public class ProductoController {
 		if (viejo.isPresent()) {
 			if(c.getNombre() != null) viejo.get().setNombre(c.getNombre());
 			if(c.getCantidad() != 0) viejo.get().setCantidad(c.getCantidad());
+			if(c.getMonto() != 0) viejo.get().setMonto(c.getMonto());
 			boolean ok = this.productoServicio.putProducto(viejo.get());
 			if (ok) {
 				return new ResponseEntity<Producto>(viejo.get(), HttpStatus.OK);

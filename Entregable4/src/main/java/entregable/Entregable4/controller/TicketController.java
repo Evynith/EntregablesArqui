@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import entregable.Entregable4.servicios.ClienteServicio;
 import entregable.Entregable4.servicios.ProductoServicio;
+import entregable.Entregable4.servicios.TicketProductoServicio;
 import entregable.Entregable4.servicios.TicketServicio;
 import entregable.Entregable4.entidades.Cliente;
 import entregable.Entregable4.entidades.Producto;
 import entregable.Entregable4.entidades.Ticket;
+import entregable.Entregable4.pojo.DayReport;
 
 @RestController
 @RequestMapping("/ventas")
@@ -32,6 +34,8 @@ public class TicketController {
 	private ClienteServicio clienteServicio;
 	@Autowired
 	private ProductoServicio productoServicio;
+	@Autowired
+	private TicketProductoServicio ticketProductoServicio;
 
 //	@GetMapping("")
 //	public String saludo() {
@@ -41,6 +45,11 @@ public class TicketController {
 	@GetMapping("")
 	public List<Ticket> getAll() {
 		return this.ticketServicio.getTickets();
+	}
+	
+	@GetMapping("/reporte")
+	public List<DayReport> getReporte(){
+		return this.ticketProductoServicio.getReporteVentas();
 	}
 	
 	@PostMapping("")

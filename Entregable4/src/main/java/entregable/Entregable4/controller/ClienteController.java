@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import entregable.Entregable4.entidades.Cliente;
+import entregable.Entregable4.pojo.ClientReport;
 import entregable.Entregable4.servicios.ClienteServicio;
+import entregable.Entregable4.servicios.TicketProductoServicio;
 
 @RestController
 @RequestMapping("/clientes")
@@ -25,10 +27,17 @@ public class ClienteController {
 	
 	@Autowired
 	private ClienteServicio clienteServicio;
+	@Autowired
+	private TicketProductoServicio ticketProductoServicio;
 	
 	@GetMapping("")
 	public List<Cliente> getAll() {
 		return this.clienteServicio.getClientes();
+	}
+	
+	@GetMapping("/reporte")
+	public List<ClientReport> getReporte() {
+		return this.ticketProductoServicio.getReporteClientes();
 	}
 	
 	@PostMapping("")

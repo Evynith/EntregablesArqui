@@ -1,13 +1,17 @@
 package entregable.Entregable4.servicios;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import entregable.Entregable4.entidades.Producto;
 import entregable.Entregable4.entidades.TicketProducto;
-import entregable.Entregable4.repositorios.RepositorioProducto;
+import entregable.Entregable4.pojo.ClientReport;
+import entregable.Entregable4.pojo.DayReport;
+import entregable.Entregable4.pojo.ProductReport;
 import entregable.Entregable4.repositorios.RepositorioTicketProducto;
 
 @Service
@@ -33,5 +37,14 @@ public class TicketProductoServicio {
 		return true;
 	}
 	
-
+	public List<ClientReport> getReporteClientes(){
+		return this.ticketProducto.getClientsReport();
+	}
+	public List<DayReport> getReporteVentas(){
+		return this.ticketProducto.getDayReport();
+	}
+	public ProductReport getMasVendido(){
+		PageRequest limitOne = PageRequest.of(0, 1);
+		return this.ticketProducto.getMostSoldProduct(limitOne);
+	}
 }
