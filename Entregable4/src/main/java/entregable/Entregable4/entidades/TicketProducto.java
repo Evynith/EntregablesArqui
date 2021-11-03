@@ -81,7 +81,9 @@ public class TicketProducto implements Serializable {
 	public Producto getProducto() {
 		return producto;
 	}
-
+	public int getIdProducto() { return this.getProducto().getID(); }
+	public int getIdCliente() { return this.getTicket().getCliente().getId(); }
+	
 	public void setProducto(Producto producto) {
 		this.producto = producto;
 	}

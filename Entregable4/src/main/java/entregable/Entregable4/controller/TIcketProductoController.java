@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import entregable.Entregable4.entidades.Producto;
 import entregable.Entregable4.entidades.Ticket;
@@ -33,23 +34,34 @@ public class TIcketProductoController {
 	private TicketProductoServicio ticketProductoServicio;
 	
 	@PostMapping("/{id}")
-	public ResponseEntity<Ticket> addProducto(@PathVariable("id")int idTicket, @RequestBody TicketProducto tp){
+	public ResponseStatusException addProducto(@PathVariable("id")int idTicket, @RequestBody TicketProducto tp){
 		Optional<Ticket> op = this.ticketServicio.getTicketById(idTicket);
 		if (op.isPresent()) {
 			Optional<Producto> prod= this.productoServicio.getProducto(tp.getIdProduct());
 			if (prod.isPresent()) {
-				tp.setProducto(prod.get());
-				tp.setTicket(op.get());
-				List<TicketProducto> tt = op.get().getProductos();
-				tt.add(tp);
-				op.get().setProductos(tt);
+				int cantidadRestante = this.ticketProductoServicio.getCantidadRestante(op.get().getCliente().getId(),prod.get().getID(), 3, op.get().getFechaEmision());
+				if (cantidadRestante > 0 && tp.getCantidadProducto() <= cantidadRestante) {
+					tp.setProducto(prod.get());
+					tp.setTicket(op.get());
+					List<TicketProducto> tt = op.get().getProductos();
+					tt.add(tp);
+					op.get().setProductos(tt);
+					
+					boolean ok = this.ticketProductoServicio.add(tp);
+					if (ok) {
+//						return new ResponseEntity<Ticket>(op.get(), HttpStatus.OK);
+						return new ResponseStatusException(HttpStatus.OK, "Se ha realizado la acción con éxito");
+					}
+				} else {
+					//superaa la cantidad de productos diarios
+//					return new ResponseEntity<String>("Supera la cantidad mínima diaria",HttpStatus.NOT_ACCEPTABLE);
+					return new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Supera la cantidad mínima diaria");
+				}
+				
 			}
 		}
-		boolean ok = this.ticketProductoServicio.add(tp);
-		if (!ok) {
-			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-		}
-		return new ResponseEntity<Ticket>(op.get(), HttpStatus.OK);
+//		return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		return new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Ha habido un error");
 	}
 	
 	@DeleteMapping("/{id}") //recibo un idElement
@@ -68,12 +80,18 @@ public class TIcketProductoController {
 		if (t.isPresent()) {
 			Optional<TicketProducto> tpp = this.ticketProductoServicio.getById(tp.getIdElement());
 			if (tpp.isPresent()) {
-				if (tp.getCantidadProducto() != 0) tpp.get().setCantidadProducto(tp.getCantidadProducto());
+				int cantidadRestante = this.ticketProductoServicio.getCantidadRestante(t.get().getCliente().getId(),tpp.get().getIdProduct(), 3, t.get().getFechaEmision());
+				if (cantidadRestante > 0 && tp.getCantidadProducto() <= cantidadRestante) {
 					
-				boolean ok = this.ticketProductoServicio.put(tpp.get());
-				if (ok) {
-					return new ResponseEntity<Ticket>(t.get(), HttpStatus.OK);
-				}	
+					if (tp.getCantidadProducto() != 0) tpp.get().setCantidadProducto(tp.getCantidadProducto());
+					boolean ok = this.ticketProductoServicio.put(tpp.get());
+					if (ok) {
+						return new ResponseEntity<Ticket>(t.get(), HttpStatus.OK);
+					}	
+				} else {
+					//supero la cantidad diaria de cosa por dia
+				}
+					
 			}
 		}	
 		return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);

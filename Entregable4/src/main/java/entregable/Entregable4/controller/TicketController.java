@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import entregable.Entregable4.servicios.ClienteServicio;
 import entregable.Entregable4.servicios.ProductoServicio;
@@ -53,7 +54,7 @@ public class TicketController {
 	}
 	
 	@PostMapping("")
-	public ResponseEntity<Ticket> addTicket(@RequestBody Ticket t) {
+	public ResponseStatusException addTicket(@RequestBody Ticket t) {
 		Optional<Cliente> cli = this.clienteServicio.getCliente(t.getIdCliente());
 		if (cli.isPresent()) {
 			t.setCliente( cli.get());
@@ -61,15 +62,22 @@ public class TicketController {
 		t.getProductos().forEach(p -> {
 			Optional<Producto> prod= this.productoServicio.getProducto(p.getIdProduct());
 			if (prod.isPresent()) {
-				p.setProducto(prod.get());
-				p.setTicket(t);
+				int cantidadRestante = this.ticketProductoServicio.getCantidadRestante(cli.get().getId(),prod.get().getID(), 3, t.getFechaEmision());
+				if (cantidadRestante > 0 && p.getCantidadProducto() <= cantidadRestante) {
+					p.setProducto(prod.get());
+					p.setTicket(t);					
+				}else {
+					//supera cantidad de producto diario 
+				}
 			}	
 		});
 		boolean ok = this.ticketServicio.addTicket(t);
-		if (!ok) {
-			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		if (ok) {
+//			return new ResponseEntity<Ticket>(t, HttpStatus.OK);
+			return new ResponseStatusException(HttpStatus.OK, "Se ha realizado la acción con éxito");
 		}
-		return new ResponseEntity<Ticket>(t, HttpStatus.OK);
+		return new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "No se ha podido completar la acción");
+//		return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 	}
 	
 	@PutMapping("/{id}")
