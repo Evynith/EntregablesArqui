@@ -30,4 +30,13 @@ public class ProductoServicio {
 		return this.producto.findById(idProducto);
 	}
 
+	public boolean putProducto(Producto producto2) {
+		this.producto.flush();
+		return true;
+	}
+
+	public void deleteProducto(int id) {
+		this.producto.deleteById(id);
+	}
+
 }

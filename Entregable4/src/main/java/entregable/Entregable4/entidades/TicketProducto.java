@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
@@ -22,20 +24,22 @@ import entregable.Entregable4.servicios.ProductoServicio;
 
 @Entity
 @Table(name = "ticket_producto")
-@IdClass(IDTicketProducto.class)
+//@IdClass(IDTicketProducto.class)
 public class TicketProducto implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int ID;
+//	@Id
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(insertable = true, nullable = false, name="id_producto")
 	private Producto producto;
 	
-	@Id
+//	@Id
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(insertable = true, nullable = false, name= "id_ticket")
 	private Ticket ticket;  
@@ -43,10 +47,35 @@ public class TicketProducto implements Serializable {
 	private int cantidadProducto;
 	
 	private int idProduct;
+	private int idElement;
 	
+	public void setIdElement(int idElement) {
+		this.idElement = idElement;
+	}
+
+	public int getIdElement() {
+		return idElement;
+	}
+
+	public TicketProducto(int idProduct , int cantidadProducto, int idElement) {
+		super();
+		this.idProduct = idProduct;
+		this.cantidadProducto = cantidadProducto;
+		this.idElement = idElement;
+	}
+
+	public TicketProducto(int idElement) {
+		super();
+		this.idElement = idElement;
+	}
+
 	public TicketProducto() {
 		super();
 		
+	}
+
+	public int getID() {
+		return ID;
 	}
 
 	public Producto getProducto() {

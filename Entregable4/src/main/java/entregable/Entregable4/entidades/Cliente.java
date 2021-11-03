@@ -69,6 +69,10 @@ public class Cliente {
 		return id;
 	}
 
+	public void setDni(int dni) {
+		this.dni = dni;
+	}
+
 	@Override
 	public String toString() {
 		return "Cliente [dni=" + dni + ", nombre=" + nombre + "]";

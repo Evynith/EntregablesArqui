@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 public class Ticket{
@@ -95,6 +97,11 @@ public class Ticket{
 
 	public int getID() {
 		return ID;
+	}
+
+	@JsonIgnore
+	public Cliente getCliente() {
+		return this.cliente;
 	}
 	
 	

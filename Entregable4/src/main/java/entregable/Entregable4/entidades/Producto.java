@@ -23,8 +23,8 @@ public class Producto{
 	private String nombre;
 	@Column
 	private int stock;
-	@OneToMany(orphanRemoval = true, mappedBy = "producto") 
-	@Cascade(CascadeType.ALL)
+	//orphanRemoval = true,  es para poder borrar aunque tenga referenciado
+	@OneToMany(mappedBy = "producto") 
 	private List<TicketProducto> tickets;
 
 	public Producto() {

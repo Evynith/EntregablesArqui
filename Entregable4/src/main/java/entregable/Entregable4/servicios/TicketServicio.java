@@ -30,5 +30,14 @@ public class TicketServicio {
 		return this.ticket.findById(id);
 	}
 
+	public boolean putTicket(Ticket ticket2) {
+		this.ticket.flush();
+		return true;
+	}
+
+	public void deleteTicket(int id) {
+		this.ticket.deleteById(id);
+	}
+
 	
 }
