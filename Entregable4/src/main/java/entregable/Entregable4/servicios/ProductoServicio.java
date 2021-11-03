@@ -26,17 +26,42 @@ public class ProductoServicio {
 		return true;
 	}
 
+	@Transactional
 	public Optional<Producto> getProducto(int idProducto) {
 		return this.producto.findById(idProducto);
 	}
 
+	@Transactional
 	public boolean putProducto(Producto producto2) {
 		this.producto.flush();
 		return true;
 	}
 
+	@Transactional
 	public void deleteProducto(int id) {
 		this.producto.deleteById(id);
+	}
+	
+	@Transactional
+	public boolean actualizaStockIngreso(Producto p,int cantidad) {
+//		if (p.getCantidad() >= cantidad) {
+			p.setCantidad(p.getCantidad() + cantidad);
+			this.producto.flush();
+		return true;
+//		} else {
+//			return false;
+//		}
+	}
+	
+	@Transactional
+	public boolean actualizaStockEgreso(Producto p,int cantidad) {
+		if (p.getCantidad() >= cantidad) {
+			p.setCantidad(p.getCantidad() - cantidad);
+			this.producto.flush();
+		return true;
+		} else {
+			return false;
+		}
 	}
 
 }

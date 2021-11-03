@@ -43,13 +43,14 @@ public class Ticket{
 	public Ticket() {
 		super();
 		this.fechaEmision = new Date();
+		this.productos = new ArrayList<TicketProducto>();
 	}
 	
 	public Ticket(List<TicketProducto> productos, Date fecha) {
 		super();
 		this.productos = productos;
 		this.fechaEmision = fecha;
-//		this.productos = new ArrayList<TicketProducto>();
+		this.productos = new ArrayList<TicketProducto>();
 	}
 	
 	public Ticket(List<TicketProducto> productos, Cliente cliente) {
@@ -64,8 +65,7 @@ public class Ticket{
 		this.idCliente = idCliente;
 		this.productos = productos;
 		this.fechaEmision = new Date();
-		System.out.print(this.fechaEmision);
-//		this.productos = new ArrayList<TicketProducto>();
+		this.productos = new ArrayList<TicketProducto>();
 	}
 
 	

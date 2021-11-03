@@ -23,22 +23,41 @@ public class TicketProductoServicio {
 
 	@Autowired
 	private RepositorioTicketProducto ticketProducto;
+	@Autowired
+	private ProductoServicio productoServicio;
 	
 	public boolean add(TicketProducto tp) {
-		return this.ticketProducto.save(tp) != null;
+		if (tp.getProducto().getCantidad() > tp.getCantidadProducto()) {
+			this.productoServicio.actualizaStockEgreso(tp.getProducto(), tp.getCantidadProducto());
+			return this.ticketProducto.save(tp) != null;			
+		} else {
+			return false;
+		}
 	}
 
-	public void delete(int idElement) {
-		this.ticketProducto.deleteById(idElement);
+	public void delete(TicketProducto tp) {
+		this.productoServicio.actualizaStockIngreso(tp.getProducto(), tp.getCantidadProducto()) ;
+		this.ticketProducto.deleteById(tp.getID());
 	}
 
 	public Optional<TicketProducto> getById(int idElement) {
 		return this.ticketProducto.findById(idElement);
 	}
 
-	public boolean put(TicketProducto ticketProducto2) {
-		this.ticketProducto.flush();
-		return true;
+	public boolean put(TicketProducto ticketProducto, int viejaCantidad) {
+		int cantActual = ticketProducto.getProducto().getCantidad();
+		int nvaCantidad = ticketProducto.getCantidadProducto();
+		if ( nvaCantidad <= cantActual) {
+			if (nvaCantidad > viejaCantidad) {
+				this.productoServicio.actualizaStockEgreso(ticketProducto.getProducto(), nvaCantidad - viejaCantidad);
+			} else {
+				this.productoServicio.actualizaStockIngreso(ticketProducto.getProducto(), viejaCantidad - nvaCantidad);
+			}
+			this.ticketProducto.flush();
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	public List<ClientReport> getReporteClientes(){
@@ -54,8 +73,6 @@ public class TicketProductoServicio {
 
 	public Integer getCantidadRestante(int c, int idProducto, int cantidadTotal, Date fecha){
 		PageRequest limitOne = PageRequest.of(0, 1);
-//		return cantidadTotal - this.ticketProducto.getRestantProduct(c, idProducto, limitOne).getCantidadActual();
-//		return cantidadTotal - this.ticketProducto.getRestantProduct(c, idProducto,limitOne).getCantidadActual();
 		 Calendar calendar = Calendar.getInstance();
 	      calendar.setTime(fecha);
 		String dia = calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH)+1) + "-" + calendar.get(Calendar.DAY_OF_MONTH);

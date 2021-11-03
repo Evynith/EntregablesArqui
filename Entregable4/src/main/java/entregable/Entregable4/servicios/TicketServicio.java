@@ -15,6 +15,8 @@ public class TicketServicio {
 
 	@Autowired
 	private RepositorioTicket ticket;
+	@Autowired
+	private TicketProductoServicio ticketProductoServicio;
 
 	@Transactional
 	public boolean addTicket(Ticket t) {
@@ -36,6 +38,9 @@ public class TicketServicio {
 	}
 
 	public void deleteTicket(int id) {
+		this.ticket.findById(id).get().getProductos().forEach(p -> {
+			this.ticketProductoServicio.delete(p);
+		}); 
 		this.ticket.deleteById(id);
 	}
 
