@@ -1,6 +1,7 @@
 package entregable.Entregable4.servicios;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,21 @@ public class ClienteServicio {
 	public boolean addCliente(Cliente c) {
 		this.cliente.save(c);
 		return true;
+	}
+
+	public Optional<Cliente> getCliente(int idCliente) {
+		return this.cliente.findById(idCliente);
+	}
+
+	@Transactional
+	public boolean putCliente(Cliente c) {
+		this.cliente.flush();
+		return true;
+	}
+	
+	@Transactional
+	public void deleteCliente(int idCliente) {
+		this.cliente.deleteById(idCliente);
 	}
 
 }

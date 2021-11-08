@@ -1,11 +1,10 @@
 package entregable.Entregable4.entidades;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,7 +14,7 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 @Entity
-public class Producto {
+public class Producto{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,27 +22,21 @@ public class Producto {
 	@Column
 	private String nombre;
 	@Column
-	private int cantidad;
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "producto") 
-	@Cascade(CascadeType.PERSIST)
+	private int stock;
+	@Column
+	private double monto;
+	//orphanRemoval = true,  es para poder borrar aunque tenga referenciado
+	@OneToMany(mappedBy = "producto") 
 	private List<TicketProducto> tickets;
 
 	public Producto() {
 		super();
 	}
 
-	public Producto(String nombre, int cantidad) {
+	public Producto(String nombre, int cantidad, double monto) {
 		super();
 		this.nombre = nombre;
-		this.cantidad = cantidad;
-		this.tickets = new ArrayList<TicketProducto>();
-	}
-	
-	public Producto(String nombre, int cantidad, List<TicketProducto> tickets) {
-		super();
-		this.nombre = nombre;
-		this.cantidad = cantidad;
-		this.tickets = tickets;
+		this.stock = cantidad;
 //		this.tickets = new ArrayList<TicketProducto>();
 	}
 
@@ -56,23 +49,36 @@ public class Producto {
 	}
 
 	public int getCantidad() {
-		return cantidad;
+		return stock;
 	}
 
 	public void setCantidad(int cantidad) {
-		this.cantidad = cantidad;
+		this.stock = cantidad;
 	}
 
-	public List<TicketProducto> getTickets() {
-		return tickets;
-	}
-
-	public void setTickets(List<TicketProducto> tickets) {
-		this.tickets = tickets;
-	}
+//	public List<TicketProducto> getTickets() {
+//		return tickets;
+//	}
+//
+//	public void setTickets(List<TicketProducto> tickets) {
+//		this.tickets = tickets;
+//	}
 
 	public int getID() {
 		return ID;
+	}
+
+	public double getMonto() {
+		return monto;
+	}
+
+	public void setMonto(double monto) {
+		this.monto = monto;
+	}
+
+	@Override
+	public String toString() {
+		return "Producto [nombre=" + nombre + "]";
 	}
 	
 	

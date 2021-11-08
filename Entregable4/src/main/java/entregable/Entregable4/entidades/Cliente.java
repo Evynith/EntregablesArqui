@@ -1,5 +1,6 @@
 package entregable.Entregable4.entidades;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +24,7 @@ public class Cliente {
 	private int dni;
 	@Column
 	private String nombre;
-	@OneToMany
-	@Cascade(CascadeType.PERSIST)
+	@OneToMany(mappedBy = "cliente")
 	private List<Ticket> tickets;
 	
 	public Cliente() {
@@ -67,6 +67,15 @@ public class Cliente {
 	
 	public int getId() {
 		return id;
+	}
+
+	public void setDni(int dni) {
+		this.dni = dni;
+	}
+
+	@Override
+	public String toString() {
+		return "Cliente [dni=" + dni + ", nombre=" + nombre + "]";
 	}
 	
 	
