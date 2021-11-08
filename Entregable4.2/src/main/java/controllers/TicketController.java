@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import models.Ticket;
+import pojo.CartProducts;
 import pojo.ClientReport;
 import pojo.MostSoldProduct;
 import pojo.SalesPerDay;
@@ -54,7 +55,7 @@ public class TicketController {
 	}
 	
 	// Genere un reporte donde se indiquen los clientes y el monto total de sus compras.
-	@GetMapping("/clients-report")
+	@GetMapping("/client-reports")
 	public List<ClientReport> getClientsReport() {
 		return this.repository.getClientsReport();
 	}
@@ -71,5 +72,15 @@ public class TicketController {
 		PageRequest limitOne = PageRequest.of(0, 1);
 		return this.repository.getMostSoldProduct(limitOne);
 	}
+	
+	@GetMapping("/cart/{id}")
+	public List<CartProducts> getCart(@PathVariable Long id) {
+		return this.repository.getCart(id);
+	}
+	
+//	@PutMapping("/cart/{id}")
+//	public void removeProduct(@PathVariable Long id, @RequestBody RemoveProduct rp) {
+//		this.repository.removeProduct(id, rp.getQuantity(), rp.getId());
+//	}
 }
 
