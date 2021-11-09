@@ -13,11 +13,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 
 @Entity
@@ -37,7 +39,8 @@ public class Ticket{
 	private List<TicketProducto> productos;
 	@ManyToOne
 	private Cliente cliente;
-	
+	@JsonInclude(JsonInclude.Include.NON_DEFAULT)
+	@Transient
 	private int idCliente;
 	
 	public Ticket() {
