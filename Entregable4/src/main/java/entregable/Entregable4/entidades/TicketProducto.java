@@ -15,10 +15,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import entregable.Entregable4.servicios.ProductoServicio;
 
@@ -45,8 +47,11 @@ public class TicketProducto implements Serializable {
 	private Ticket ticket;  
 	@Column(nullable = false)
 	private int cantidadProducto;
-	
+	@JsonInclude(JsonInclude.Include.NON_DEFAULT)
+	@Transient
 	private int idProduct;
+	@JsonInclude(JsonInclude.Include.NON_DEFAULT)
+	@Transient
 	private int idElement;
 	
 	public void setIdElement(int idElement) {
@@ -81,9 +86,7 @@ public class TicketProducto implements Serializable {
 	public Producto getProducto() {
 		return producto;
 	}
-	public int getIdProducto() { return this.getProducto().getID(); }
-	public int getIdCliente() { return this.getTicket().getCliente().getId(); }
-	
+
 	public void setProducto(Producto producto) {
 		this.producto = producto;
 	}
