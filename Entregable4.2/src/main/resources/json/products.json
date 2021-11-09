@@ -1,0 +1,52 @@
+[
+	{
+		"name": "Alfajor",
+		"prize": 50.0,
+		"stock": 37
+	},
+	{
+		"name": "Agua",
+		"prize": 90.0,
+		"stock": 20
+	},
+	{
+		"name": "Chocolate",
+		"prize": 200.0,
+		"stock": 12
+	},
+	{
+		"name": "Hamburguesas",
+		"prize": 500.0,
+		"stock": 10
+	},
+	{
+		"name": "Naranja",
+		"prize": 200.0,
+		"stock": 14
+	},
+	{
+		"name": "Manzana",
+		"prize": 200.0,
+		"stock": 15
+	},
+	{
+		"name": "Papel de cocina",
+		"prize": 100.0,
+		"stock": 6
+	},
+	{
+		"name": "Desodorante",
+		"prize": 150.0,
+		"stock": 7
+	},
+	{
+		"name": "Papa",
+		"prize": 200.0,
+		"stock": 13
+	},
+	{
+		"name": "Pasta dental",
+		"prize": 250.0,
+		"stock": 9
+	}
+]

@@ -1,0 +1,37 @@
+[
+	{
+		"quantity": 5,
+		"ticket_id": 61,
+		"product_id": 31
+	},
+	{
+		"quantity": 1,
+		"ticket_id": 61,
+		"product_id": 40
+	},
+	{
+		"quantity": 2,
+		"ticket_id": 61,
+		"product_id": 36
+	},
+	{
+		"quantity": 6,
+		"ticket_id": 62,
+		"product_id": 33
+	},
+	{
+		"quantity": 1,
+		"ticket_id": 62,
+		"product_id": 34
+	},
+	{
+		"quantity": 2,
+		"ticket_id": 63,
+		"product_id": 37
+	},
+	{
+		"quantity": 10,
+		"ticket_id": 64,
+		"product_id": 38
+	}
+]

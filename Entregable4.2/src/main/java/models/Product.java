@@ -16,23 +16,42 @@ public class Product {
 	private String name;
 	@Column
 	private double prize;
+	@Column
+	private int stock;
 	
 	public Product() {}
 	
-	public Product(String name, double prize) {
+	public Product(String name, double prize, int stock) {
 		this.name = name;
 		this.prize = prize;
-	}
-
-	public Long getId() {
-		return id;
+		this.stock = stock;
 	}
 
 	public String getName() {
 		return name;
 	}
-	
-	public Double getPrize() {
-		return this.prize;
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public double getPrize() {
+		return prize;
+	}
+
+	public void setPrize(double prize) {
+		this.prize = prize;
+	}
+
+	public int getStock() {
+		return stock;
+	}
+
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+
+	public Long getId() {
+		return id;
 	}
 }

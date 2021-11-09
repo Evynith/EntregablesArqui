@@ -15,8 +15,6 @@ import javax.persistence.TemporalType;
 @Entity
 public class Ticket {
 	
-	//TODO Arreglar el POST de ticket, el error del null con el cliente
-	
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@ManyToOne
