@@ -1,21 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const addProduct = async (e) => {
-        e.preventDefault();
-        const status = document.querySelector("#status");
+    const addProduct = async(product, status) => {
         setStatusMessage(status, "Agregando producto..", "bg-primary");
-        const data = {
-            "name": document.querySelector("input[name=name]").value,
-            "prize": document.querySelector("input[name=prize]").value,
-            "stock": document.querySelector("input[name=stock]").value,
-        }
-        
         try {
 			const url = '/products';
             const response = await fetch(url, {
                 "method": "POST",
                 "headers": {"Content-Type": "application/json"},
-                "body": JSON.stringify(data) 
+                "body": JSON.stringify(product) 
             });
             setStatusMessage(status, "Se ha agregado correctamente.", "bg-success");
 		} catch (response) {
@@ -32,5 +24,16 @@ document.addEventListener("DOMContentLoaded", () => {
         status.classList.add("text-white");
     }
 
-    document.querySelector("#addProduct").addEventListener("click", addProduct);
+    document.querySelector("#addProduct").addEventListener("click", (e) => {
+        e.preventDefault();
+        const status = document.querySelector("#status");
+        const name = document.querySelector("input[name=name]").value;
+        const price = document.querySelector("input[name=price]").value;
+        const stock = document.querySelector("input[name=stock]").value;
+
+        if (name != '' && price != 0 && stock != 0) 
+            addProduct({name, price, stock}, status);
+        else 
+            setStatusMessage(status, "Te faltan rellenar datos", "bg-danger");
+    });
 })

@@ -1,52 +1,62 @@
 [
 	{
 		"name": "Alfajor",
-		"prize": 50.0,
-		"stock": 37
+		"price": 50.0,
+		"stock": 37,
+		"quantity": 10
 	},
 	{
 		"name": "Agua",
-		"prize": 90.0,
-		"stock": 20
+		"price": 90.0,
+		"stock": 20,
+		"quantity": 11
 	},
 	{
 		"name": "Chocolate",
-		"prize": 200.0,
-		"stock": 12
+		"price": 200.0,
+		"stock": 12,
+		"quantity": 9
 	},
 	{
 		"name": "Hamburguesas",
-		"prize": 500.0,
-		"stock": 10
+		"price": 500.0,
+		"stock": 10,
+		"quantity": 16
 	},
 	{
 		"name": "Naranja",
-		"prize": 200.0,
-		"stock": 14
+		"price": 200.0,
+		"stock": 14,
+		"quantity": 13
 	},
 	{
 		"name": "Manzana",
-		"prize": 200.0,
-		"stock": 15
+		"price": 200.0,
+		"stock": 15,
+		"quantity": 12
 	},
 	{
 		"name": "Papel de cocina",
-		"prize": 100.0,
-		"stock": 6
+		"price": 100.0,
+		"stock": 6,
+		"quantity": 14
 	},
 	{
 		"name": "Desodorante",
-		"prize": 150.0,
-		"stock": 7
+		"price": 150.0,
+		"stock": 7,
+		"quantity": 9
 	},
 	{
 		"name": "Papa",
-		"prize": 200.0,
-		"stock": 13
+		"price": 200.0,
+		"stock": 13,
+		"quantity": 10
 	},
 	{
 		"name": "Pasta dental",
-		"prize": 250.0,
-		"stock": 9
+		"price": 250.0,
+		"stock": 9,
+		"quantity": 10
 	}
 ]

@@ -1,41 +1,30 @@
 package pojo;
 
+import java.util.Date;
+
 public class SalesPerDay {
 
-	private int day;
-	private String name;
-	private int quantity;
+	private Date date;
+	private Long quantity;
 	private double amount;
-//	private List<ProductSale> products = new ArrayList<ProductSale>();
 	
 	public SalesPerDay() {}
 	
-	public SalesPerDay(int day, String name, int quantity, double amount) {
-		this.day = day;
-		this.name = name;
+	public SalesPerDay(Date date, Long quantity, double amount) {
+		this.date = date;
 		this.quantity = quantity;
 		this.amount = amount;
-//		this.products.add(new ProductSale(name, amount, quantity));
 	}
 
-	public int getDay() {
-		return day;
+	public Date getDate() {
+		return date;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public int getQuantity() {
+	public Long getQuantity() {
 		return quantity;
 	}
 
 	public double getAmount() {
 		return amount;
 	}
-
-//	public List<ProductSale> getProducts() {
-//		return products;
-//	}
-	
 }

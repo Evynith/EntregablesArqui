@@ -12,13 +12,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const sales = await response.json();
             salesPerDay.innerHTML = '';
 
-            sales.forEach(({day, name, quantity, amount}) => {
+            sales.forEach(({date, quantity, amount}) => {
                 salesPerDay.innerHTML += `
                 <div class="card text-white bg-dark mb-3">
                     <div class="card-body">
-                        <h5 class="card-title">Día: ${day}</h5>
-                        <h5 class="card-title">Nombre: ${name}</h5>
-                        <h5 class="card-title">Cantidad: $${quantity}</h5>
+                        <h5 class="card-title">Fecha: ${date}</h5>
+                        <h5 class="card-title">Cantidad: ${quantity}</h5>
                         <h5 class="card-title">Monto total: $${amount}</h5>
                     </div>
                 </div>

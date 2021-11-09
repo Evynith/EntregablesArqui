@@ -4,23 +4,24 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-@IdClass(ProductTicketId.class)
 public class ProductTicket implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 	@ManyToOne
 	@JoinColumn(insertable = true, nullable = false)
 	private Ticket ticket;
-	@Id
-	@ManyToOne 
+	@ManyToOne
 	@JoinColumn(insertable = true, nullable = false)
 	private Product product;  
 	@Column
@@ -44,5 +45,10 @@ public class ProductTicket implements Serializable {
 
 	public Ticket getTicket() {
 		return ticket;
+	}
+
+	@Override
+	public String toString() {
+		return "ProductTicket [ticket=" + ticket + ", product=" + product + ", quantity=" + quantity + "]";
 	}
 }

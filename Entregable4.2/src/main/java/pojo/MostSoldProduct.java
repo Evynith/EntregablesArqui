@@ -5,15 +5,15 @@ public class MostSoldProduct {
 	private String name;
 	private double amount;
 	private Long quantity;
-	private double prizePerUnit;
+	private double pricePerUnit;
 	
 	public MostSoldProduct() {}
 	
-	public MostSoldProduct(String name, double amount, Long quantity, double prizePerUnit) {
+	public MostSoldProduct(String name, double amount, Long quantity, double pricePerUnit) {
 		this.name = name;
 		this.amount = amount;
 		this.quantity = quantity;
-		this.prizePerUnit = prizePerUnit;
+		this.pricePerUnit = pricePerUnit;
 	}
 
 	public String getName() {
@@ -28,7 +28,7 @@ public class MostSoldProduct {
 		return quantity;
 	}
 	
-	public double getPrizePerUnit() {
-		return prizePerUnit;
+	public double getPricePerUnit() {
+		return pricePerUnit;
 	}
 }

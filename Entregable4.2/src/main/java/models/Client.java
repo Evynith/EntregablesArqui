@@ -56,4 +56,8 @@ public class Client {
 	public Long getId() {
 		return id;
 	}
+	
+	public String toString() {
+		return this.name;
+	}
 }

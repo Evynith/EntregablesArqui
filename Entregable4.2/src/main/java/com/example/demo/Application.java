@@ -1,10 +1,28 @@
 package com.example.demo;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import controllers.ClientController;
+import controllers.ProductController;
+import controllers.TicketController;
+import models.Client;
+import models.Product;
+import pojo.ClientProducts;
 
 @SpringBootApplication
 @ComponentScan("controllers")
@@ -16,80 +34,47 @@ public class Application {
 		SpringApplication.run(Application.class, args);
 	}
 	
-//	@Bean
-//	CommandLineRunner clientRunner(ClientController clientController) {
-//		return args -> {
-//			// read json and write to db
-//			ObjectMapper mapper = new ObjectMapper();
-//			TypeReference<List<Client>> typeReference = new TypeReference<List<Client>>(){};
-//			InputStream inputStream = TypeReference.class.getResourceAsStream("/json/clients.json");
-//			try {
-//				List<Client> clients = mapper.readValue(inputStream,typeReference);
-//				for(Client c : clients) {
-//					clientController.newClient(c);
-//					System.out.println("Client Saved!");					
-//				}
-//			} catch (IOException e){
-//				System.out.println("Unable to save clients: " + e.getMessage());
-//			}
-//		};
-//	}
-//	
-//	@Bean
-//	CommandLineRunner productRunner(ProductController productController) {
-//		return args -> {
-//			// read json and write to db
-//			ObjectMapper mapper = new ObjectMapper();
-//			TypeReference<List<Product>> typeReference = new TypeReference<List<Product>>(){};
-//			InputStream inputStream = TypeReference.class.getResourceAsStream("/json/products.json");
-//			try {
-//				List<Product> products = mapper.readValue(inputStream,typeReference);
-//				for(Product p : products) {
-//					productController.newProduct(p);
-//					System.out.println("Product Saved!");					
-//				}
-//			} catch (IOException e){
-//				System.out.println("Unable to save products: " + e.getMessage());
-//			}
-//		};
-//	}
-//	
-//	@Bean
-//	CommandLineRunner ticketRunner(TicketController ticketController) {
-//		return args -> {
-//			// read json and write to db
-//			ObjectMapper mapper = new ObjectMapper();
-//			TypeReference<List<Ticket>> typeReference = new TypeReference<List<Ticket>>(){};
-//			InputStream inputStream = TypeReference.class.getResourceAsStream("/json/tickets.json");
-//			try {
-//				List<Ticket> tickets = mapper.readValue(inputStream,typeReference);
-//				for(Ticket t : tickets) {
-//					ticketController.newTicket(t);
-//					System.out.println("Ticket Saved!");					
-//				}
-//			} catch (IOException e){
-//				System.out.println("Unable to save tickets: " + e.getMessage());
-//			}
-//		};
-//	}
+	@Bean
+	CommandLineRunner ticketRunner(TicketController tc, ClientController cc, ProductController pc) {
+		return args -> {
+			// read json and write to db
+			ObjectMapper mapper = new ObjectMapper();
+			TypeReference<List<Client>> typeReferenceClient = new TypeReference<List<Client>>(){};
+			TypeReference<List<Product>> typeReferenceProducts = new TypeReference<List<Product>>(){};
+			InputStream inputStreamClients = TypeReference.class.getResourceAsStream("/json/clients.json");
+			InputStream inputStreamProducts = TypeReference.class.getResourceAsStream("/json/products.json");
+			try {
+				List<Client> clients = mapper.readValue(inputStreamClients,typeReferenceClient);
+				List<Product> products = mapper.readValue(inputStreamProducts,typeReferenceProducts);
+				for(Product p : products) {
+					pc.newProduct(p);
+					System.out.println("Product Saved!");				
+				}
+			
+				for(Client c : clients) {
+					List<Product> randomProducts = new ArrayList<Product>();
+					cc.newClient(c);
+					System.out.println("Client Saved!");
+					
+					Random rand = new Random();
+					for(int i = 0; i < rand.nextInt(products.size()); i++) {
+						Product randomProduct = getRandomElement(products);
+						randomProducts.add(randomProduct);						
+					}
+					
+					ClientProducts cp = new ClientProducts(c, randomProducts);
+					tc.newTicket(cp);
+					System.out.println("Ticket Saved!");																								
+				}
+				
+			} catch (IOException e){
+				System.out.println("Unable to save tickets: " + e.getMessage());
+			}
+		};
+	}
 	
-	// TODO arreglar este método que no anda
-//	@Bean
-//	CommandLineRunner productTicketRunner(ProductTicketController productTicket) {
-//		return args -> {
-//			// read json and write to db
-//			ObjectMapper mapper = new ObjectMapper();
-//			TypeReference<List<ProductTicket>> typeReference = new TypeReference<List<ProductTicket>>(){};
-//			InputStream inputStream = TypeReference.class.getResourceAsStream("/json/productsTickets.json");
-//			try {
-//				List<ProductTicket> productsTicket = mapper.readValue(inputStream,typeReference);
-//				for(ProductTicket prt : productsTicket) {
-//					productTicket.newProductTicket(prt);
-//					System.out.println("Product Ticket Saved!");					
-//				}
-//			} catch (IOException e){
-//				System.out.println("Unable to save Products tickets: " + e.getMessage());
-//			}
-//		};
-//	}
+	public Product getRandomElement(List<Product> list) {
+        Random rand = new Random();
+        return list.get(rand.nextInt(list.size()));
+    }
 }

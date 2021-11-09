@@ -14,11 +14,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import models.Product;
+import models.ProductTicket;
 import models.Ticket;
-import pojo.CartProducts;
+import pojo.ClientProducts;
 import pojo.ClientReport;
 import pojo.MostSoldProduct;
 import pojo.SalesPerDay;
+import repositories.ProductTicketRepository;
 import repositories.TicketRepository;
 
 @RestController
@@ -28,14 +31,25 @@ public class TicketController {
 	@Qualifier("ticketRepository")
 	@Autowired
 	private final TicketRepository repository;
+	@Qualifier("productTicketRepository")
+	@Autowired
+	private final ProductTicketRepository productTicketRepository;
 	
-	public TicketController(@Qualifier("ticketRepository") TicketRepository repository) {
+	public TicketController(@Qualifier("ticketRepository") TicketRepository repository,
+			@Qualifier("productTicketRepository") ProductTicketRepository productTicketRepository) {
 		 this.repository = repository;
+		 this.productTicketRepository = productTicketRepository;
 	}
 	
 	@PostMapping("")
-	public Ticket newTicket(@RequestBody Ticket ticket) {
-		return this.repository.save(ticket);
+	public void newTicket(@RequestBody ClientProducts cp) {
+		Ticket t = new Ticket(cp.getClient());
+		this.repository.save(t);		
+
+		for(Product p : cp.getProducts()) {
+			ProductTicket pt = new ProductTicket(t, p, p.getQuantity());
+			this.productTicketRepository.save(pt);					
+		}
 	}
 	
 	@GetMapping("")
@@ -72,15 +86,5 @@ public class TicketController {
 		PageRequest limitOne = PageRequest.of(0, 1);
 		return this.repository.getMostSoldProduct(limitOne);
 	}
-	
-	@GetMapping("/cart/{id}")
-	public List<CartProducts> getCart(@PathVariable Long id) {
-		return this.repository.getCart(id);
-	}
-	
-//	@PutMapping("/cart/{id}")
-//	public void removeProduct(@PathVariable Long id, @RequestBody RemoveProduct rp) {
-//		this.repository.removeProduct(id, rp.getQuantity(), rp.getId());
-//	}
 }
 

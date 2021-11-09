@@ -44,4 +44,9 @@ public class Ticket {
 	public Date getCreated_at() {
 		return created_at;
 	}
+
+	@Override
+	public String toString() {
+		return "Ticket [id=" + id + ", client=" + client + ", created_at=" + created_at + "]";
+	}
 }

@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const products = await response.json();
             productList.innerHTML = '';
 
-            products.forEach(({id, name, prize, stock}) => {
+            products.forEach(({id, name, price, stock}) => {
                 productList.innerHTML += `
                 <div class="d-flex flex-column justify-content-center align-items-center mt-5">
                     <form method="post" class="bg-dark text-white rounded p-4">
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Precio por unidad</label>
-                            <input type="number" class="form-control" name="prize" value="${prize}" data-prize="${id}">
+                            <input type="number" class="form-control" name="price" value="${price}" data-price="${id}">
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Cantidad de stock</label>
@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const id = document.querySelector(`[data-btn="${e.target.dataset.btn}"]`).dataset.btn;
         const data = {
             "name": document.querySelector(`[data-name="${e.target.dataset.btn}"]`).value,
-            "prize": document.querySelector(`[data-prize="${e.target.dataset.btn}"]`).value,
+            "price": document.querySelector(`[data-price="${e.target.dataset.btn}"]`).value,
             "stock": document.querySelector(`[data-stock="${e.target.dataset.btn}"]`).value,
         }
         try {

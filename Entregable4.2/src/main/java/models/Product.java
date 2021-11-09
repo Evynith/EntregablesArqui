@@ -15,16 +15,21 @@ public class Product {
 	@Column
 	private String name;
 	@Column
-	private double prize;
+	private double price;
 	@Column
 	private int stock;
+	private transient int quantity;
 	
 	public Product() {}
 	
-	public Product(String name, double prize, int stock) {
+	public Product(String name, double price, int stock) {
 		this.name = name;
-		this.prize = prize;
+		this.price = price;
 		this.stock = stock;
+	}
+	
+	public Product(int quantity) {
+		this.quantity = quantity;
 	}
 
 	public String getName() {
@@ -35,12 +40,12 @@ public class Product {
 		this.name = name;
 	}
 
-	public double getPrize() {
-		return prize;
+	public double getPrice() {
+		return price;
 	}
 
-	public void setPrize(double prize) {
-		this.prize = prize;
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 	public int getStock() {
@@ -50,8 +55,16 @@ public class Product {
 	public void setStock(int stock) {
 		this.stock = stock;
 	}
+	
+	public int getQuantity() {
+		return this.quantity;
+	}
 
 	public Long getId() {
 		return id;
+	}
+	
+	public String toString() {
+		return this.name;
 	}
 }
