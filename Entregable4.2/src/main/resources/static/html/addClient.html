@@ -9,9 +9,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200&display=swap" rel="stylesheet">
-    <script type="text/javascript" src="/js/addProduct.js"></script>
+    <script type="text/javascript" src="/js/addClient.js"></script>
     <link rel="stylesheet" href="/css/styles.css">
-    <title>Agregar producto</title>
+    <title>Agregar cliente</title>
 </head>
 <body>
 
@@ -60,21 +60,17 @@
     </nav>
     
     <div class="d-flex flex-column justify-content-center align-items-center mt-5">
-        <h1>Agregar un producto</h1>
+        <h1>Agregar un cliente</h1>
         <form method="post" class="bg-dark text-white rounded mt-5 p-4">
             <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Nombre del producto</label>
+                <label for="exampleInputEmail1" class="form-label">Nombre</label>
                 <input type="text" class="form-control" aria-describedby="emailHelp" name="name">
             </div>
             <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Precio por unidad</label>
-                <input type="number" class="form-control" name="price">
+                <label for="exampleInputPassword1" class="form-label">Apellido</label>
+                <input type="text" class="form-control" name="surname">
             </div>
-            <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Cantidad de stock</label>
-                <input type="number" class="form-control" name="stock">
-            </div>
-            <button type="submit" class="btn btn-success" id="addProduct">Agregar</button>
+            <button type="submit" class="btn btn-success" id="addClient">Agregar</button>
             <!-- <a href="/Entregable3/" class="btn btn-primary">Volver</a> -->
             <p id="status"></p>
         </form>
