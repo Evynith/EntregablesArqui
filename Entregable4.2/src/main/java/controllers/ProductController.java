@@ -50,7 +50,12 @@ public class ProductController {
 	
 	@PutMapping("/{id}")
 	public void modifyProduct(@PathVariable Long id, @RequestBody Product product) {
-		this.repository.deleteById(id);
-		this.repository.save(product);
+		Optional<Product> p = getProduct(id);
+		if (p.isPresent()) {
+			p.get().setName(product.getName());
+			p.get().setPrice(product.getPrice());
+			p.get().setStock(product.getStock());
+			this.repository.save(p.get());
+		}
 	}
 }

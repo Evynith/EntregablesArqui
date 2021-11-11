@@ -1,14 +1,10 @@
 package models;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Client {
@@ -19,8 +15,8 @@ public class Client {
 	private String name;
 	@Column
 	private String surname;
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
-    private List<Ticket> tickets;
+//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
+//    private List<Ticket> tickets;
 	
 	public Client() {}
 
@@ -45,13 +41,13 @@ public class Client {
 		this.surname = surname;
 	}
 
-	public List<Ticket> getTickets() {
-		return tickets;
-	}
-
-	public void setTickets(List<Ticket> tickets) {
-		this.tickets = tickets;
-	}
+//	public List<Ticket> getTickets() {
+//		return tickets;
+//	}
+//
+//	public void setTickets(List<Ticket> tickets) {
+//		this.tickets = tickets;
+//	}
 
 	public Long getId() {
 		return id;

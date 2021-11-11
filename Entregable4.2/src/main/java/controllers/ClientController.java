@@ -50,7 +50,11 @@ public class ClientController {
 	
 	@PutMapping("/{id}")
 	public void modifyClient(@PathVariable Long id, @RequestBody Client client) {
-		this.repository.deleteById(id);
-		this.repository.save(client);
+		Optional<Client> c = getClient(id);
+		if (c.isPresent()) {
+			c.get().setName(client.getName());
+			c.get().setSurname(client.getSurname());
+			this.repository.save(c.get());
+		}
 	}
 }
