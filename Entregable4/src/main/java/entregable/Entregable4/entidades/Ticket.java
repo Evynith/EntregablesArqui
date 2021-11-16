@@ -17,6 +17,7 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -70,6 +71,14 @@ public class Ticket{
 		this.fechaEmision = new Date();
 		this.productos = new ArrayList<TicketProducto>();
 	}
+	
+	public float getTotal() {
+		float total = 0;
+		for(TicketProducto tp: this.productos){
+			total += tp.getProducto().getMonto() * tp.getCantidadProducto();
+		}
+		return total;
+	}
 
 	
 	
@@ -102,11 +111,10 @@ public class Ticket{
 		return ID;
 	}
 
-	@JsonIgnore
+//	@JsonIgnore
 	public Cliente getCliente() {
 		return this.cliente;
 	}
-	
 	
 	
 

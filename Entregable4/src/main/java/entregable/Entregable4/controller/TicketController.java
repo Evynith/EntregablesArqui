@@ -7,6 +7,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +30,8 @@ import entregable.Entregable4.entidades.Ticket;
 import entregable.Entregable4.entidades.TicketProducto;
 import entregable.Entregable4.pojo.DayReport;
 
-@RestController
+//@RestController
+@Controller
 @RequestMapping("/ventas")
 public class TicketController {
 	
@@ -49,8 +52,10 @@ public class TicketController {
 //	}
 	
 	@GetMapping("")
-	public List<Ticket> getAll() {
-		return this.ticketServicio.getTickets();
+	public String getAll(Model model) {
+//		return this.ticketServicio.getTickets();
+		model.addAttribute("listaTickets", this.ticketServicio.getTickets());
+		return "ticket";
 	}
 	
 	@GetMapping("/reporte")
@@ -122,7 +127,12 @@ public class TicketController {
 		Optional<Ticket> to = this.ticketServicio.getTicketById(id);
 		if (to.isPresent()) {
 			//la fecha no tiene sentido poder editarse¿?
-			if (t.getCliente() != null) to.get().setCliente(t.getCliente());
+//			if (t.getCliente() != null) to.get().setCliente(t.getCliente());
+			if (t.getIdCliente() != 0) {
+			Optional<Cliente> cli = this.clienteServicio.getCliente(t.getIdCliente());
+			if (cli.isPresent()) {
+				to.get().setCliente( cli.get());
+			}}
 			//editarle los productos en su xontrolador propio
 			boolean ok = this.ticketServicio.putTicket(to.get());
 			if (ok) {

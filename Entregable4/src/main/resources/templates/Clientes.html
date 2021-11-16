@@ -2,17 +2,15 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Productos</title>
+<title>Clientes</title>
 </head>
 <body>
-<h2> Agregar nuevo producto</h2>
+<h2> Agregar nuevo cliente</h2>
 <form>
 	<label for="nvo-nombre">Nombre</label>
+	<label for="nvo-dni">DNI</label>
+	<input name="nvo-dni" id="nvo-dni" type="number">
 	<input name="nvo-nombre" id="nvo-nombre">
-	<label for="nvo-cantidad">Cantidad</label>
-	<input name="nvo-cantidad" id="nvo-cantidad" type="number">
-	<label for="nvo-monto">Monto</label>
-	<input type="number" name="nvo-monto" id="nvo-monto">
 	<button id="btn-agregar">Agregar</button>
 </form>
 
@@ -20,6 +18,6 @@
 <div id="editar"></div>
 <div id="contenido"></div>
 
-<script src="../scripts/productos.js"></script>
+<script src="../scripts/clientes.js"></script>
 </body>
 </html>
