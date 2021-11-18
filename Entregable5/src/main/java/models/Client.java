@@ -25,23 +25,44 @@ public class Client {
 	
 	public Client() {}
 
+	/**
+	 * 
+	 * @param name es el nombre del cliente
+	 * @param surname es el apellido del cliente
+	 */
 	public Client(String name, String surname) {
 		this.name = name;
 		this.surname = surname;
 	}
 
+	/**
+	 * 
+	 * @return el nombre del cliente
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * 
+	 * @param name es el nuevo nombre del cliente
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * 
+	 * @return el apellido del cliente
+	 */
 	public String getSurname() {
 		return surname;
 	}
 
+	/**
+	 * 
+	 * @param surname es el nuevo apellido del cliente
+	 */
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
@@ -54,6 +75,10 @@ public class Client {
 //		this.tickets = tickets;
 //	}
 
+	/**
+	 * 
+	 * @return el id del cliente
+	 */
 	public Long getId() {
 		return id;
 	}

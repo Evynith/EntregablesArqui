@@ -15,20 +15,38 @@ public class SalesPerDay {
 	
 	public SalesPerDay() {}
 	
+	/**
+	 * 
+	 * @param date es la fecha del día
+	 * @param quantity es la cantidad de productos vendidos por día
+	 * @param amount es el monto total ganado por día
+	 */
 	public SalesPerDay(Date date, Long quantity, double amount) {
 		this.date = date;
 		this.quantity = quantity;
 		this.amount = amount;
 	}
 
+	/**
+	 * 
+	 * @return la fecha del día
+	 */
 	public Date getDate() {
 		return date;
 	}
 
+	/**
+	 * 
+	 * @return la cantidad de productos vendidos por día
+	 */
 	public Long getQuantity() {
 		return quantity;
 	}
 
+	/**
+	 * 
+	 * @return el monto ganado por día
+	 */
 	public double getAmount() {
 		return amount;
 	}

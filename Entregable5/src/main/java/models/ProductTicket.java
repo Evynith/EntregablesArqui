@@ -32,20 +32,38 @@ public class ProductTicket implements Serializable {
 	
 	public ProductTicket() {}
 	
+	/**
+	 * 
+	 * @param ticket es el ticket perteneciente al producto
+	 * @param product es el producto perteneciente al ticket
+	 * @param quantity es la cantidad del producto
+	 */
 	public ProductTicket(Ticket ticket, Product product, int quantity) {
 		this.ticket = ticket;
 		this.product = product;
 		this.quantity = quantity;
 	}
 
+	/**
+	 * 
+	 * @return la cantidad del producto
+	 */
 	public int getQuantity() {
 		return quantity;
 	}
 
+	/**
+	 * 
+	 * @return el producto
+	 */
 	public Product getProduct() {
 		return product;
 	}
 
+	/**
+	 * 
+	 * @return el ticket
+	 */
 	public Ticket getTicket() {
 		return ticket;
 	}

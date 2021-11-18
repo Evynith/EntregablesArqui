@@ -15,6 +15,13 @@ public class MostSoldProduct {
 	
 	public MostSoldProduct() {}
 	
+	/**
+	 * 
+	 * @param name el nombre del producto
+	 * @param amount el monto total ganado del producto
+	 * @param quantity cantidad del producto vendido
+	 * @param pricePerUnit precio por unidad del producto
+	 */
 	public MostSoldProduct(String name, double amount, Long quantity, double pricePerUnit) {
 		this.name = name;
 		this.amount = amount;
@@ -22,18 +29,34 @@ public class MostSoldProduct {
 		this.pricePerUnit = pricePerUnit;
 	}
 
+	/**
+	 * 
+	 * @return el nombre del producto
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * 
+	 * @return el monto total ganado del producto
+	 */
 	public double getAmount() {
 		return amount;
 	}
 
+	/**
+	 * 
+	 * @return la cantidad total vendida del producto
+	 */
 	public Long getQuantity() {
 		return quantity;
 	}
 	
+	/**
+	 * 
+	 * @return el precio por unidad del producto
+	 */
 	public double getPricePerUnit() {
 		return pricePerUnit;
 	}

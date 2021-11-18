@@ -15,6 +15,10 @@ import pojo.SalesPerDay;
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
 	
+	/**
+	 * Obtengo el nombre, el apellido y la cantidad gastado de cada cliente
+	 * @return una lista de reportes de los clientes
+	 */
 	@Query("SELECT new pojo.ClientReport(c.name, c.surname, SUM(pt.quantity * p.price))"
 			+ " FROM ProductTicket pt"
 			+ " JOIN pt.ticket t"
@@ -23,6 +27,10 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 			+ " GROUP BY c")
 	public List<ClientReport> getClientsReport();
 	
+	/**
+	 * Obtengo la fecha de creación, la cantidad total de productos y el monto total por día
+	 * @return una lista de ventas por día
+	 */
 	@Query("SELECT new pojo.SalesPerDay(t.created_at, SUM(pt.quantity), SUM(pt.product.price * pt.quantity))"
 			+ " FROM ProductTicket pt"
 			+ " JOIN pt.ticket t"
@@ -30,6 +38,11 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 			+ " ORDER BY t.created_at")
 	public List<SalesPerDay> getSalesPerDay();
 	
+	/**
+	 * Obtengo el nombre, el monto total generado, la cantidad total vendida y el precio por unidad del producto
+	 * @param limitOne que es para ponerle un límite de 1 a la búsqueda
+	 * @return el producto más vendido
+	 */
 	@Query("SELECT new pojo.MostSoldProduct(p.name, SUM(pt.quantity * p.price), SUM(pt.quantity), p.price)"
 			+ " FROM ProductTicket pt"
 			+ " JOIN pt.product p"

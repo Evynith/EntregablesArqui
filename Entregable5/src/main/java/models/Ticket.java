@@ -28,22 +28,42 @@ public class Ticket {
 	
 	public Ticket() {}
 	
+	/**
+	 * 
+	 * @param client es el cliente del ticket
+	 */
 	public Ticket(Client client) {
 		this.client = client;
 	}
 
+	/**
+	 * 
+	 * @return el cliente
+	 */
 	public Client getClient() {
 		return client;
 	}
 
+	/**
+	 * 
+	 * @param client es el nuevo cliente
+	 */
 	public void setClient(Client client) {
 		this.client = client;
 	}
 
+	/**
+	 * 
+	 * @return el id del ticket
+	 */
 	public Long getId() {
 		return id;
 	}
 
+	/**
+	 * 
+	 * @return la fecha de creación del ticket
+	 */
 	public Date getCreated_at() {
 		return created_at;
 	}
