@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Cliente {
 
@@ -53,6 +55,7 @@ public class Cliente {
 		this.nombre = nombre;
 	}
 
+	@JsonIgnore
 	public List<Ticket> getTickets() {
 		return tickets;
 	}
