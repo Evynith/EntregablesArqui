@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Optional;
@@ -17,6 +18,17 @@ public class TestProduct {
 	
 	@Autowired
 	private ProductRepository repository;
+	
+	@Test
+	public void newProduct() {
+		Product newProduct = new Product("Alfajor", 50, 12);
+		
+		this.repository.save(newProduct);
+		
+		Optional<Product> product = this.repository.findById(newProduct.getId());
+		if (product.isPresent()) 
+			assertTrue(product.get().getId() == newProduct.getId());	
+	}
 
 	@Test
 	public void getProduct() {
@@ -27,6 +39,30 @@ public class TestProduct {
 		Optional<Product> p = this.repository.findById(newProduct.getId());
 		if (p.isPresent())
 			assertTrue(p.get() != null);
+	}
+	
+	@Test
+	public void deleteAllProducts() {
+		Product newProduct = new Product("Alfajor", 50, 12);
+		Product newProduct2 = new Product("Chocolate", 120, 10);
+		
+		this.repository.save(newProduct);
+		this.repository.save(newProduct2);
+		
+		this.repository.deleteAll();
+		
+		assertThat(repository.findAll()).isEmpty();
+	}
+	
+	@Test
+	public void deleteProductById() {
+		Product newProduct = new Product("Alfajor", 50, 12);
+		
+		this.repository.save(newProduct);
+		
+		Optional<Product> p = this.repository.findById(newProduct.getId());
+		if (p.isPresent())
+			this.repository.deleteById(p.get().getId());
 	}
 	
 	@Test
