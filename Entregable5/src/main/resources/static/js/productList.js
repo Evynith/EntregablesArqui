@@ -35,17 +35,41 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    const getClients = async() => {
+        const clientList = document.querySelector("#client-list");
+
+        // try {
+            clientList.innerHTML = `
+            <div class="spinner-border text-light" role="status"></div>
+            `
+            const url = "/clients";
+            const response = await fetch(url);
+            const clients = await response.json();
+            clientList.innerHTML = '';
+
+            clients.forEach(({id, name, surname}) => {
+                let sel = document.createElement("option");
+                sel.setAttribute("value", id);
+                sel.innerHTML += `${surname}, ${name}` 
+                clientList.appendChild(sel);
+            })	
+        // } catch (response) {
+        //     console.log("Algo falló.");
+        // }
+    }
+
     const buy = async(e) => {
         e.preventDefault();
         const data = {
             "client": {
-                "id": 11
+                "id": document.querySelector("#client-list").value
             },
-
             "products": []
         }
 
+        console.log("cli:",  document.querySelector("#client-list").value);
         let isProducts = false;
+        let isClient = false;
         const productInputs = document.querySelectorAll("input");
         productInputs.forEach((input) => {
             if (input.value != 0) {
@@ -57,8 +81,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 data.products.push(product);
             }
         })
+        if(data.client.id != null){
+            isClient = true;
+        }
 
-        if (isProducts) {
+        if (isProducts && isClient) {
             try {
                 const url = `/tickets`
                 const response = await fetch(url, {
@@ -98,6 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const main = async() => {
         await getProducts();
+        await getClients();
 
         const sumBtns = document.querySelectorAll(".add");
         sumBtns.forEach((btn) => {
