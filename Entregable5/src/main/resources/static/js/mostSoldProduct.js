@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const url = "/tickets/most-sold-product"
             const response = await fetch(url);
             const product = await response.json();
+console.log(response, product);
             productBox.innerHTML = '';
 
             productBox.innerHTML += `

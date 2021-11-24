@@ -43,10 +43,9 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 	 * @param limitOne que es para ponerle un límite de 1 a la búsqueda
 	 * @return el producto más vendido
 	 */
-	@Query("SELECT new pojo.MostSoldProduct(p.name, SUM(pt.quantity * p.price), SUM(pt.quantity), p.price)"
+	@Query("SELECT new pojo.MostSoldProduct(pt.product.name, SUM(pt.quantity * pt.product.price), SUM(pt.quantity), pt.product.price)"
 			+ " FROM ProductTicket pt"
-			+ " JOIN pt.product p"
-			+ " GROUP BY pt.quantity"
+			+ " GROUP BY pt.product, pt.quantity"
 			+ " ORDER BY pt.quantity DESC")
 	public MostSoldProduct getMostSoldProduct(PageRequest limitOne);
 }
