@@ -12,6 +12,9 @@ import javax.persistence.ManyToOne;
 
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * Entidad que va a representar al producto con su respectivo ticket y a su tabla
+ */
 @Entity
 public class ProductTicket implements Serializable {
 

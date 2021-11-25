@@ -13,6 +13,9 @@ import javax.persistence.TemporalType;
 
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * Entidad que va a representar al ticket y a su tabla
+ */
 @Entity
 public class Ticket {
 	

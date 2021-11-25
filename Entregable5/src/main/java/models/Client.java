@@ -8,6 +8,9 @@ import javax.persistence.Id;
 
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * Entidad que va a representar al cliente y a su tabla
+ */
 @Entity
 public class Client {
 

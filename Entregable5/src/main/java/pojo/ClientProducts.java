@@ -5,6 +5,9 @@ import java.util.List;
 import models.Client;
 import models.Product;
 
+/**
+ * DTO que almacenará los productos del cliente
+ */
 public class ClientProducts {
 
 	private Client client;

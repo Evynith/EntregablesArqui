@@ -2,6 +2,9 @@ package pojo;
 
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * DTO que almacenará un reporte del cliente con sus datos y el monto que ha gastado
+ */
 public class ClientReport {
 
 	@ApiModelProperty(notes = "Nombre del cliente", required = true)

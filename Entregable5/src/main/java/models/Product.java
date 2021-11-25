@@ -8,7 +8,9 @@ import javax.persistence.Id;
 
 import io.swagger.annotations.ApiModelProperty;
 
-
+/**
+ * Entidad que va a representar al producto y a su tabla
+ */
 @Entity
 public class Product {
 

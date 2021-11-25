@@ -10,6 +10,12 @@ import models.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
+	/**
+	 * 
+	 * @param c es el cliente
+	 * @param p es el producto
+	 * @return la cantidad del producto comprado del cliente
+	 */
 	@Query("SELECT SUM(pt.quantity) "
 			+ "FROM ProductTicket pt "
 			+ "WHERE pt.ticket.client = ?1 "

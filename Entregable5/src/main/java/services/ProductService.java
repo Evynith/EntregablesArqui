@@ -24,6 +24,11 @@ public class ProductService {
 		this.productRepository = productRepository;
 	}
 	
+	/**
+	 * 
+	 * @param p es el producto
+	 * @return un boolean representando si se actualizó o no el stock
+	 */
 	@Transactional
 	public boolean actualizaStockIngreso(Product p) {
 //		p.setStock(p.getStock() + p.getQuantity());
@@ -37,6 +42,11 @@ public class ProductService {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param p es el producto
+	 * @return un boolean representando si se actualizó o no el stock
+	 */
 	@Transactional
 	public boolean actualizaStockEgreso(Product p) {
 //		if (p.getStock() >= p.getQuantity()) {
@@ -44,7 +54,7 @@ public class ProductService {
 //			this.productRepository.flush();
 		Optional<Product> p1 = this.productRepository.findById(p.getId());
 		if (p1.isPresent()) {
-			if (p1.get().getStock()  >= p.getQuantity()) {
+			if (p1.get().getStock() >= p.getQuantity()) {
 				p1.get().setStock(p1.get().getStock() - p.getQuantity());
 				this.productRepository.save(p1.get());
 				return true;
@@ -55,14 +65,18 @@ public class ProductService {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param p es el producto
+	 * @param c es el cliente
+	 * @return cantidad comprado del producto del cliente
+	 */
 	public int getProductDay(Product p, Client c) {
-		Integer cantInteger =  this.productRepository.getCantProductOfDay(c, p);
+		Integer cantInteger = this.productRepository.getCantProductOfDay(c, p);
 		if(cantInteger != null) {
 			return cantInteger;
 		} else {
 			return 0;
 		}
 	}
-
-
 }

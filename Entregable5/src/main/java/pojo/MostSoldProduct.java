@@ -2,6 +2,9 @@ package pojo;
 
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * DTO que almacenará los datos del producto más vendido
+ */
 public class MostSoldProduct {
 	
 	@ApiModelProperty(notes = "Nombre del producto", required = true)

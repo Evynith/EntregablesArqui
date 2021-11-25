@@ -4,6 +4,9 @@ import java.util.Date;
 
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * DTO que almacenará las ventas por día
+ */
 public class SalesPerDay {
 
 	@ApiModelProperty(notes = "Fecha del día", required = true)
