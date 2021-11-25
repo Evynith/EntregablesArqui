@@ -1,10 +1,13 @@
 package com.example.demo;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -18,64 +21,63 @@ public class TestProduct {
 	
 	@Autowired
 	private ProductRepository repository;
+	private List<Product> productList = new ArrayList<Product>();
+	
+	@BeforeEach
+	public void beforeTest() {
+		Product alfajor = new Product("Alfajor", 50, 12);
+		Product leche = new Product("Leche", 145, 15);
+		
+		this.productList.add(alfajor);
+		this.productList.add(leche);
+	}
 	
 	@Test
 	public void newProduct() {
-		Product newProduct = new Product("Alfajor", 50, 12);
+		Product alfajor = this.productList.get(0);
 		
-		this.repository.save(newProduct);
+		this.repository.save(alfajor);
 		
-		Optional<Product> product = this.repository.findById(newProduct.getId());
+		Optional<Product> product = this.repository.findById(alfajor.getId());
 		if (product.isPresent()) 
-			assertTrue(product.get().getId() == newProduct.getId());	
+			assertTrue(product.get().getId() == alfajor.getId());	
 	}
 
 	@Test
 	public void getProduct() {
-		Product newProduct = new Product("Alfajor", 50, 12);
+		Product alfajor = this.productList.get(0);
 		
-		this.repository.save(newProduct);
+		this.repository.save(alfajor);
 		
-		Optional<Product> p = this.repository.findById(newProduct.getId());
+		Optional<Product> p = this.repository.findById(alfajor.getId());
 		if (p.isPresent())
 			assertTrue(p.get() != null);
 	}
 	
 	@Test
-	public void deleteAllProducts() {
-		Product newProduct = new Product("Alfajor", 50, 12);
-		Product newProduct2 = new Product("Chocolate", 120, 10);
-		
-		this.repository.save(newProduct);
-		this.repository.save(newProduct2);
-		
-		this.repository.deleteAll();
-		
-		assertThat(repository.findAll()).isEmpty();
-	}
-	
-	@Test
 	public void deleteProductById() {
-		Product newProduct = new Product("Alfajor", 50, 12);
+		Product alfajor = this.productList.get(0);
 		
-		this.repository.save(newProduct);
+		this.repository.save(alfajor);
 		
-		Optional<Product> p = this.repository.findById(newProduct.getId());
-		if (p.isPresent())
-			this.repository.deleteById(p.get().getId());
+		Optional<Product> product = this.repository.findById(alfajor.getId());
+		if (product.isPresent()) {
+			this.repository.deleteById(product.get().getId());
+			assertFalse(this.repository.existsById(product.get().getId()));
+		}
 	}
 	
 	@Test
 	public void modifyProduct() {
 		ProductController pc = new ProductController(this.repository);
-		Product newProduct = new Product("Alfajor", 50, 12);
-		Product newInfoProduct = new Product("Caramelo", 5, 100);
+		Product alfajor = this.productList.get(0);
+		Product leche = this.productList.get(1);
 		
-		this.repository.save(newProduct);
+		this.repository.save(alfajor);
 		
-		pc.modifyProduct(newProduct.getId(), newInfoProduct);
+		pc.modifyProduct(alfajor.getId(), leche);
 		
-		assertTrue(newProduct.getName().equals(newInfoProduct.getName()));
+		assertTrue(alfajor.getName().equals(leche.getName()));
 	}
 	
 }

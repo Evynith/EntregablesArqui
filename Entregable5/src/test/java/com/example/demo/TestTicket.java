@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,80 +39,66 @@ public class TestTicket {
 	@Autowired
 	private ProductTicketRepository productTicketRepository;
 	
-	private Client client;
-	private Client client2;
-	private Product product;
-	private Product product2;
-	private Ticket ticket;
-	private Ticket ticket2;
-	private ProductTicket pt;
-	private ProductTicket pt2;
-	private ProductTicket pt3;
-	private double totalAmount;
+	List<Client> clientList = new ArrayList<Client>();
+	private Client fede;
+	private Client evy;
+	private Product alfajor;
+	private Product chocolate;
 
 	@BeforeEach
-	public void beforeEach() {
+	public void beforeTest() {
 		newClient();
 		newProduct();
-		newTicket();
-		newProductTicket();
 	}
 	
 	public void newClient() {
-		this.client = new Client("Federico", "de Muguruza");
-		this.client2 = new Client("Federico2", "de Muguruza2");
-		this.clientRepository.save(client);
-		this.clientRepository.save(client2);
+		this.fede = new Client("Federico", "de Muguruza");
+		this.evy = new Client("Evelyn", "Vega");
+		this.clientRepository.save(fede);
+		this.clientRepository.save(evy);
+		this.clientList.add(fede);
+		this.clientList.add(evy);
 	}
-	
+
 	public void newProduct() {
-		this.product = new Product("Alfajor", 50, 12);
-		this.product2 = new Product("Chocolate", 120, 10);
-		this.productRepository.save(product);
-		this.productRepository.save(product2);
+		this.alfajor = new Product("Alfajor", 50, 12);
+		this.chocolate = new Product("Chocolate", 120, 10);
+		this.productRepository.save(alfajor);
+		this.productRepository.save(chocolate);
 	}
 	
-	public void newTicket() {
-		this.ticket = new Ticket(client);
+	public Ticket newTicket(Client client) {
+		Ticket ticket = new Ticket(client);
 		this.ticketRepository.save(ticket);
-		this.ticket2 = new Ticket(client2);
-		this.ticketRepository.save(ticket2);
+		return ticket;
 	}
 	
-	public void newProductTicket() {
-		this.pt = new ProductTicket(ticket, product, 3);
-		this.pt2 = new ProductTicket(ticket, product2, 2);
-		this.pt3 = new ProductTicket(ticket2, product2, 2);
+	public ProductTicket newProductTicket(Ticket ticket, Product product) {
+		Random rand = new Random();
+		ProductTicket pt = new ProductTicket(ticket, product, rand.nextInt(10+1));
 		this.productTicketRepository.save(pt);
-		this.productTicketRepository.save(pt2);
-		this.productTicketRepository.save(pt3);
+		return pt;
 	}
 	
 	@Test
 	public void getClientsReport() {
-		List<Client> clients = new ArrayList<Client>();
-		clients.add(client);
-		clients.add(client2);
-		
 		int i = 0;
 		
-		for(Client client : clients) {
+		for(Client client : this.clientList) {
+			
+			Ticket ticket = newTicket(client);
+			
+			ProductTicket pt = newProductTicket(ticket, this.alfajor);
+			ProductTicket pt2 = newProductTicket(ticket, this.chocolate);
 			
 			List<ClientReport> clientReportList = this.ticketRepository.getClientsReport();
-			
-			this.totalAmount = pt.getQuantity() * pt.getProduct().getPrice();
-			this.totalAmount += pt2.getQuantity() * pt2.getProduct().getPrice();
-			
-			if (client.getName().equals("Federico2")) {
-				this.totalAmount = 0;
-				this.totalAmount += pt3.getQuantity() * pt3.getProduct().getPrice();
-			}
+			double totalAmount = pt.getQuantity() * pt.getProduct().getPrice() + pt2.getQuantity() * pt2.getProduct().getPrice();
 			
 			Optional<Client> c = this.clientRepository.findById(client.getId());
 			if (c.isPresent()) {
 				assertTrue(c.get().getName().equals(client.getName()));
 				assertTrue(c.get().getSurname().equals(client.getSurname()));
-				assertTrue(this.totalAmount == clientReportList.get(i).getAmount());
+				assertTrue(totalAmount == clientReportList.get(i).getAmount());
 			}
 			i++;
 		}
@@ -119,16 +106,21 @@ public class TestTicket {
 	
 	@Test
 	public void getSalesPerDay() {
-		List<SalesPerDay> salesPerDayList = this.ticketRepository.getSalesPerDay();
-		
 		Date created_at = new Date();
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(created_at);
 		calendar.add(Calendar.MONTH, 1);
 		String parsedCreatedAt = calendar.get(Calendar.YEAR)+"-"+calendar.get(Calendar.MONTH)+"-"+calendar.get(Calendar.DAY_OF_MONTH);
+		
+		Ticket ticket = newTicket(this.fede);
+		
+		ProductTicket pt = newProductTicket(ticket, this.alfajor);
+		ProductTicket pt2 = newProductTicket(ticket, this.chocolate);
+		
+		List<SalesPerDay> salesPerDayList = this.ticketRepository.getSalesPerDay();
      	
-		int totalQuantity = pt.getQuantity() + pt2.getQuantity() + pt3.getQuantity();
-		double totalAmount = (pt.getQuantity() * pt.getProduct().getPrice()) + (pt2.getQuantity() * pt2.getProduct().getPrice() + (pt3.getQuantity() * pt3.getProduct().getPrice()));
+		int totalQuantity = pt.getQuantity() + pt2.getQuantity();
+		double totalAmount = (pt.getQuantity() * pt.getProduct().getPrice()) + (pt2.getQuantity() * pt2.getProduct().getPrice());
 		
 		assertTrue(parsedCreatedAt.equals(salesPerDayList.get(0).getDate().toString()));
 		assertTrue(totalQuantity == salesPerDayList.get(0).getQuantity());
@@ -137,14 +129,19 @@ public class TestTicket {
 	
 	@Test
 	public void getMostSoldProduct() {
-		PageRequest limitOne = PageRequest.of(0, 1);
-		MostSoldProduct msp = this.ticketRepository.getMostSoldProduct(limitOne);
+		Ticket ticket = newTicket(this.evy);
 		
+		ProductTicket pt = newProductTicket(ticket, this.alfajor);
+		ProductTicket pt2 = newProductTicket(ticket, this.chocolate);
+		
+		MostSoldProduct msp = this.ticketRepository.getMostSoldProduct(PageRequest.of(0, 1));
+
 		if(pt.getQuantity() > pt2.getQuantity())
 			assertTrue(msp.getName().equals(pt.getProduct().getName()));
-		else if (pt.getQuantity() < pt2.getQuantity())
+		else if(pt.getQuantity() < pt2.getQuantity())
 			assertTrue(msp.getName().equals(pt2.getProduct().getName()));
-		else
-			assertTrue(msp.getName().equals(pt3.getProduct().getName()));
+		else {
+			assertTrue(msp.getName().equals(pt.getProduct().getName()));
+		}
 	}
 }
