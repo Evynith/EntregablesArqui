@@ -17,9 +17,9 @@ console.log(response, product);
             <div class="card text-white bg-dark mb-3">
                 <div class="card-body">
                     <h5 class="card-title">Nombre: ${product.name}</h5>
-                    <h5 class="card-title">Monto total: ${product.amount}</h5>
+                    <h5 class="card-title">Monto total: $${product.amount}</h5>
                     <h5 class="card-title">Cantidad: ${product.quantity}</h5>
-                    <h5 class="card-title">Precio por unidad: ${product.pricePerUnit}</h5>
+                    <h5 class="card-title">Precio por unidad: $${product.pricePerUnit}</h5>
                 </div>
             </div>
             `   
