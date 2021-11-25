@@ -18,6 +18,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import models.Client;
 import models.Product;
 import models.ProductTicket;
 import models.Ticket;
@@ -27,6 +28,7 @@ import pojo.MostSoldProduct;
 import pojo.SalesPerDay;
 import repositories.ProductTicketRepository;
 import repositories.TicketRepository;
+import services.ProductService;
 
 @RestController
 @RequestMapping("/tickets")
@@ -39,11 +41,16 @@ public class TicketController {
 	@Qualifier("productTicketRepository")
 	@Autowired
 	private final ProductTicketRepository productTicketRepository;
+	@Qualifier("productService")
+	@Autowired
+	private final ProductService productService;
 	
 	public TicketController(@Qualifier("ticketRepository") TicketRepository repository,
-			@Qualifier("productTicketRepository") ProductTicketRepository productTicketRepository) {
+			@Qualifier("productTicketRepository") ProductTicketRepository productTicketRepository,
+			@Qualifier("productService") ProductService productService ) {
 		 this.repository = repository;
 		 this.productTicketRepository = productTicketRepository;
+		 this.productService = productService;
 	}
 	
     @ApiOperation(value = "Crea un ticket", response = Iterable.class)
@@ -60,7 +67,10 @@ public class TicketController {
 
 		for(Product p : cp.getProducts()) {
 			ProductTicket pt = new ProductTicket(t, p, p.getQuantity());
-			this.productTicketRepository.save(pt);					
+			if (3 >= (this.productService.getProductDay(p, t.getClient()) + p.getQuantity() )) {
+				this.productService.actualizaStockEgreso(p);
+				this.productTicketRepository.save(pt);							
+			}
 		}
 	}
 	
